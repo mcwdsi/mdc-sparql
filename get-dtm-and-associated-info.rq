@@ -1,14 +1,15 @@
 prefix obo: <http://purl.obolibrary.org/obo/>
+prefix dc: <http://purl.org/dc/elements/1.1/>
 
-select ?x ?prefTerm ?title ?sourceCodeRelease ?version ?doi ?doiURL ?synopsis ?sourceCodeRepositoryUrl ?executableName ?executableUrl ?webAppUrl ?licenseName ?licenseUrl ?documentationDescription ?documentationUrl ?websiteUrl ?developerName ?pubAbout ?pubThatUsedRelease
+select ?x ?prefTerm ?title ?sourceCodeRelease ?version ?doi ?doiURL ?synopsis ?sourceCodeRepositoryUrl ?executableName ?executableUrl ?webAppUrl ?licenseName ?licenseUrl ?documentationDescription ?documentationUrl ?websiteUrl ?developerName ?pubAbout ?pubThatUsedRelease ?inputSpecLabel ?outputSpecLabel ?olympus ?uidsConc ?measureLabel
 from <http://www.pitt.edu/obc/ide/apollo-sv>
 from <http://www.pitt.edu/obc/ide/classes-and-indexing-instances>
 from <http://www.pitt.edu/obc/ide/article-instances>
 from <http://www.pitt.edu/obc/ide/article-deleted-instances>
 from <http://ide.obc.io/auth>
-from <http://www.pitt.edu/mdc/content>
+from <http://www.pitt.edu/obc/mdc/content>
 where {
-  ?x rdf:type <http://purl.obolibrary.org/obo/APOLLO_SV_00000174> .
+  ?x rdf:type <http://purl.obolibrary.org/obo/APOLLO_SV_00000561> .
   ?x obo:IAO_0000111 ?prefTerm .
   #if there is a title annotation, get the title
  	OPTIONAL { ?x dc:title ?title } .
@@ -49,8 +50,9 @@ where {
   			   ?u rdf:type obo:APOLLO_SV_00000524 . 
   			   ?u obo:OBI_0000293 ?x .
   			   ?u obo:OBI_0000299 ?v . 
-  			   ?v obo:BFO_0000054 ?n . 
-  			   ?n obo:ERO_0000480 ?webAppUrl } .
+  			   ?g obo:OBI_0000417 ?v . 
+  			   ?g rdf:type obo:OBIws_0000050 .
+  			   ?g obo:ERO_0000480 ?webAppUrl } .
   #get license name if present
   	OPTIONAL { ?t rdf:type obo:APOLLO_SV_00000535 . 
   			   ?t obo:BFO_0000050 ?x . 
@@ -96,6 +98,62 @@ where {
   			   ?h rdf:type obo:APOLLO_SV_00000524 .	#h instance of compiling
   			   ?h obo:OBI_0000293 ?x				#h has input the dtm 
              } .
+  #get data input formats if any
+  	OPTIONAL { ?v rdf:type obo:APOLLO_SV_00000525 .  #v is executable
+  			   ?u rdf:type obo:APOLLO_SV_00000524 .  #u is compiling
+  			   ?u obo:OBI_0000293 ?x .               #compiling has source code as input
+  			   ?u obo:OBI_0000299 ?v .               #compiling has executable as output
+  			   ?parsingPlan obo:BFO_0000050 ?v .		 #data parsing plan spec part of executable
+  			   ?dataParsing obo:OBI_0000417 ?parsingPlan . #parsing achieves parsing plan objective
+  			   ?dataParsing obo:OBI_0000417 ?inputSpec .  #parsing achieves spec objective
+  			   ?dataParsing rdf:type obo:APOLLO_SV_00000566 . #parsing individual is instance of parsing
+  			   ?inputSpec rdf:type obo:IAO_0000098 . #input spec is data format spec
+  			   ?inputSpec rdfs:label ?inputSpecLabel #input spec label
+  			} .
+  #get data output formats if any
+ 	OPTIONAL { ?v rdf:type obo:APOLLO_SV_00000525 .  #v is executable
+  			   ?u rdf:type obo:APOLLO_SV_00000524 .  #u is compiling
+  			   ?u obo:OBI_0000293 ?x .               #compiling has source code as input
+  			   ?u obo:OBI_0000299 ?v .               #compiling has executable as output
+  			   ?encodingPlan obo:BFO_0000050 ?v .		 #data encoding plan spec part of executable
+  			   ?dataEncoding obo:OBI_0000417 ?encodingPlan . #encoding achieves encoding plan objective
+  			   ?dataEncoding obo:OBI_0000417 ?outputSpec .  #encoding achieves spec objective
+  			   ?dataEncoding rdf:type obo:OBI_0000227 .  #encoding individusal is instance of encoding
+  			   ?outputSpec rdf:type obo:IAO_0000098 . #output spec is data format spec
+  			   ?outputSpec rdfs:label ?outputSpecLabel #output spec label
+  			 } .
+  #get RROO info if any
+  	OPTIONAL { ?v rdf:type obo:APOLLO_SV_00000525 .  #v is executable
+  			   ?u rdf:type obo:APOLLO_SV_00000524 .  #u is compiling
+  			   ?u obo:OBI_0000293 ?x .               #compiling has source code as input
+  			   ?u obo:OBI_0000299 ?v .               #compiling has executable as output
+  			   ?execConc rdf:type obo:IAO_0000015 .	#the executable concretization is an instance of information carrier
+  			   ?v obo:RO_0000058 ?execConc .			#and the executable is concretized by executable concretization
+  			   obo:IDE_0000000270 obo:RO_0000053 ?execConc . #and Olympus is the bearer of the executable concretization
+  			   obo:IDE_0000000270 rdfs:label ?olympus	#get label of Olympus individual
+  			} .
+  #get UIDS info if any
+   	OPTIONAL { ?v1 rdf:type obo:APOLLO_SV_00000525 .  #v1 is executable
+  			   ?u1 rdf:type obo:APOLLO_SV_00000524 .  #u1 is compiling
+  			   ?u1 obo:OBI_0000293 ?x .               #compiling has source code as input
+  			   ?u1 obo:OBI_0000299 ?v1 .               #compiling has executable as output
+  			   ?execConc1 rdf:type obo:IAO_0000015 .	#the executable concretization is an instance of information carrier
+  			   ?v1 obo:RO_0000058 ?execConc1 .			#and the executable is concretized by executable concretization
+  			   ?execDisp obo:APOLLO_SV_00000543 ?execConc1 . 	#the disposition to execute the software has its basis in the concretization
+  			   ?invokeDisp obo:BFO_0000169  ?execDisp .  #the UIDS disp to invoke the software specifically depends on the execute disposition
+  			   ?invokeDisp obo:APOLLO_SV_00000543 ?uidsConc .  #the concretization of UIDS software is the basis for the invoke disposition
+  			   } .
+  #get control measures if any
+  	OPTIONAL { ?v3 rdf:type obo:APOLLO_SV_00000525 .  #v2 is executable
+  			   ?u3 rdf:type obo:APOLLO_SV_00000524 .  #u2 is compiling
+  			   ?u3 obo:OBI_0000293 ?x .               #compiling has source code as input
+  			   ?u3 obo:OBI_0000299 ?v3 .               #compiling has executable as output
+  			   ?simulatingx obo:OBI_0000417 ?v3 .	#simulatingx achieves objective of executable
+  			   ?simulatingx rdf:type obo:APOLLO_SV_00000005  .  #simulatingx is instance of process of simulating process of type X
+  			   ?simulatingx obo:OBI_0000299 ?measure .  #simulatingx has output an infectious disease control measure
+  			   ?measure rdf:type ?measureType . #control measure is an instance of a particular type
+  			   ?measureType rdfs:label ?measureLabel #get the label on the measure type
+  			} .
   #filter out punned individuals
-     FILTER ( ?x != obo:APOLLO_SV_00000174 )
+     FILTER ( ?x != obo:APOLLO_SV_00000561 )
      }
