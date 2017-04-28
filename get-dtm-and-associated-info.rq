@@ -84,13 +84,14 @@ where {
   #get publication(s) about if any
   	OPTIONAL { ?n obo:IAO_0000136 ?x .
                ?n rdf:type obo:IAO_0000311 .
-               ?n rdfs:label ?pubAbout } .
+               ?n dc:title ?pubAbout 
+             } .
   #get publication(s) that used release if any
   	OPTIONAL { ?m obo:IAO_0000136 ?k .               #m is about k
   			   ?k rdf:type obo:OBI_0000471 .		 #k is instance of study
   			   ?m rdf:type obo:IAO_0000311 . 		 #m is instance of pub
   			   ?m dc:title ?pubThatUsedRelease .   #m has label pubThatUsedRelease
-  			   ?i obo:BFO_0000054 ?j .				#i realized by j
+  			   ?j obo:OBI_0000417 ?i .				#j achieves planned objective of i
   			   ?j rdf:type obo:OBIws_0000050 .		#j is instance of code execution
   			   ?j obo:BFO_0000050 ?k .				#j (execution) part of k (study)
   			   ?i rdf:type obo:APOLLO_SV_00000525 .	#i instance of executable
