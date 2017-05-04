@@ -1,6 +1,6 @@
 #simulated population IRI	simulates	population simulated IRI
 PREFIX obc: <http://www.pitt.edu/obc/>
-PREFIX obo: <obo:>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
 
 INSERT DATA
 {
