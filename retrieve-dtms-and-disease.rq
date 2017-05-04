@@ -1,0 +1,33 @@
+#retrieves compiled software objects and populations they simulate
+
+PREFIX obc: <http://www.pitt.edu/obc/>
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+
+
+select distinct ?compiledSoftware ?population 
+
+from <http://www.pitt.edu/obc/ide/apollo-sv>
+from <http://www.pitt.edu/obc/ide/classes-and-indexing-instances>
+from <http://www.pitt.edu/obc/ide/article-instances>
+from <http://www.pitt.edu/obc/ide/article-deleted-instances>
+from <http://ide.obc.io/auth>
+from <http://www.pitt.edu/obc/mdc/content>
+from <http://www.pitt.edu/obc/simulates-instances>
+
+WHERE {
+#COMPILED SOFTWARE ACHIEVES PLANNED OBJECTIVE SIMULATING OF PROCESS TYPE X
+	#compiled software obo:APOLLO_SV_00000525
+	?compiledSoftware a obo:APOLLO_SV_00000525 .
+	?simulatingOfProcessTypeX a obo:APOLLO_SV_00000005 .
+	#achieves planned objective obo:OBI_0000417
+	?simulatingOfProcessTypeX obo:OBI_0000417 ?compiledSoftware .
+#SIMULATING OF PROCESS TYPE X HAS SPECIFIED OUTPUT SIMULATION OF POPULATIONS
+  #has specified output - obo:OBI_0000299
+	?simulatingOfProcessTypeX obo:OBI_0000299 ?simulationOfPopulation .
+  	?simulationOfPopulation a obo:APOLLO_SV_00000031  .
+#SIMULATION OF POPULATION SIMULATES PATH POPULATION IN LOCATION X
+  #simulates obo:APOLLO_SV_00000067
+?simulationOfPopulation obo:APOLLO_SV_00000067 ?population 
+
+}
+              

@@ -1,0 +1,30 @@
+PREFIX obo: <http://purl.obolibrary.org/obo/>
+PREFIX obc: <http://www.pitt.edu/obc/>
+PREFIX ro: <http://www.obofoundry.org/ro/ro.owl#>
+
+SELECT ?DTM
+
+
+from <http://www.pitt.edu/obc/ide/apollo-sv>
+from <http://www.pitt.edu/obc/ide/classes-and-indexing-instances>
+from <http://www.pitt.edu/obc/ide/article-instances>
+from <http://www.pitt.edu/obc/ide/article-deleted-instances>
+from <http://ide.obc.io/auth>
+from <http://www.pitt.edu/obc/mdc/content>
+
+{
+#obc:IDE_0000000041 – Dengue Virus population 1 individual
+	obc:IDE_0000000041 ro:participates_in ?infectionInEcoSystem .
+	?infectionInEcoSystem a obo:APOLLO_SV_00000306 .
+#APOLLO_SV_00000067 – simulates
+	?simulation obo:APOLLO_SV_00000067 ?infectionInEcoSystem .
+	?simulation a obo:APOLLO_SV_00000031 .
+#obo:OBI_0000312 – is specified output of
+	?simulation obo:OBI_0000312 ?simulating .
+	?simulating a obo:APOLLO_SV_00000005 .
+#obo:RO_0002218 – has active participant
+	?simulating obo:RO_0002218 ?DTM .
+#obo:IAO_0000010 - software
+	?DTM a obo:IAO_0000010
+}
+    }
