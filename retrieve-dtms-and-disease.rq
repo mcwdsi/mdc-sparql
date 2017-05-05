@@ -1,10 +1,8 @@
-#retrieves compiled software objects and populations they simulate
-
 PREFIX obc: <http://www.pitt.edu/obc/>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
 
-
-select distinct ?compiledSoftware ?population 
+select distinct ?compiledSoftware ?compiledSoftwareLabel ?hostPopulation ?hostLabel ?pathogenPopulation ?pathogenLabel ?geoLocation ?geoLocationLabel #?controlMeasure ?controlMeasureLabel
+#select *
 
 from <http://www.pitt.edu/obc/ide/apollo-sv>
 from <http://www.pitt.edu/obc/ide/classes-and-indexing-instances>
@@ -15,19 +13,62 @@ from <http://www.pitt.edu/obc/mdc/content>
 from <http://www.pitt.edu/obc/simulates-instances>
 
 WHERE {
-#COMPILED SOFTWARE ACHIEVES PLANNED OBJECTIVE SIMULATING OF PROCESS TYPE X
-	#compiled software obo:APOLLO_SV_00000525
-	?compiledSoftware a obo:APOLLO_SV_00000525 .
-	?simulatingOfProcessTypeX a obo:APOLLO_SV_00000005 .
-	#achieves planned objective obo:OBI_0000417
-	?simulatingOfProcessTypeX obo:OBI_0000417 ?compiledSoftware .
-#SIMULATING OF PROCESS TYPE X HAS SPECIFIED OUTPUT SIMULATION OF POPULATIONS
+
+#get compiled software that achieves planned objective simulating of process type x
+	?simulatingOfProcessTypeX obo:OBI_0000417 ?compiledSoftware . #achieves planned objective obo:OBI_0000417
+	?compiledSoftware rdf:type obo:APOLLO_SV_00000525 . #compiled software obo:APOLLO_SV_00000525
+	?simulatingOfProcessTypeX rdf:type obo:APOLLO_SV_00000005 .
+
+
+If the compiled software has a label, get the label.
+OPTIONAL {?compiledSoftware rdfs:label ?compiledSoftwareLabel .}	
+#simulating of process type x has specified output simulation of populations
   #has specified output - obo:OBI_0000299
 	?simulatingOfProcessTypeX obo:OBI_0000299 ?simulationOfPopulation .
   	?simulationOfPopulation a obo:APOLLO_SV_00000031  .
-#SIMULATION OF POPULATION SIMULATES PATH POPULATION IN LOCATION X
+  
+optional {#simulation of population simulates host population in location x
   #simulates obo:APOLLO_SV_00000067
-?simulationOfPopulation obo:APOLLO_SV_00000067 ?population 
+?simulationOfPopulation obo:APOLLO_SV_00000067 ?hostPopulation .
+?hostPopulation rdf:type/rdfs:subClassOf* obo:APOLLO_SV_00000516 .
+?hostPopulation a ?type .
+?type rdfs:label ?hostLabel .
+  
+#?host a obo:APOLLO_SV_00000516 NO SUBCLASSES OR INSTANCES OF HOST POPULATION LOADED HERE
+#?host rdfs:label ?hostLabel 
+}
+
+ optional {#simulation of population simulates pathogen population in location x
+  #simulates obo:APOLLO_SV_00000067
+  ?simulationOfPopulation obo:APOLLO_SV_00000067 ?pathogenPopulation .
+  ?pathogenPopulation rdf:type/rdfs:subClassOf* obc:IDE_0000000007 .
+  
+?pathogenPopulation a ?type .
+?type rdfs:label ?pathogenLabel .
+}
+
+optional {#simulation of population simulates pathogen population in location x
+ #populations 
+   #simulates obo:APOLLO_SV_00000067
+?simulationOfPopulation obo:APOLLO_SV_00000067 ?population .
+	#obo:APOLLO_SV_00000516>
+?population rdf:type ?y .
+?y rdfs:subClassOf* obo:APOLLO_SV_00000516 .
+  
+ #population is proper part of biotic ecosystem
+ 	# BFO_0000137
+   	#biotic ecosystem APOLLO_SV_00000104
+ ?population obo:BFO_0000137 ?bioticEcosystem .
+ ?bioticEcosystem rdf:type obo:APOLLO_SV_00000104 .
+ #biotic ecosystem proper part of ecosystem
+ 	#obo:ecosystem APOLLO_SV_00000097
+ ?bioticEcosystem obo:BFO_0000137 ?ecosystem .
+ ?ecosystem rdf:type obo:APOLLO_SV_00000097 .
+ #ecosystem located in geographical region
+ 	#located in obo:RO_0001025 #located in relation is not in MDC
+ 	#geographical region GEO_000000372
+ ?ecosytem <http://www.obofoundry.org/ro/ro.owl#located_in> ?geoLocation .
+ ?geoLocation rdfs:label ?geoLocationLabel
+}
 
 }
-              
