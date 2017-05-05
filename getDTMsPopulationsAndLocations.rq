@@ -1,7 +1,7 @@
 PREFIX obc: <http://www.pitt.edu/obc/>
 PREFIX obo: <http://purl.obolibrary.org/obo/>
 
-select distinct ?compiledSoftware ?compiledSoftwareLabel ?hostPopulation ?hostPopulationLabel ?hostType ?hostTypeLabel ?pathogenPopulation ?pathogenPopulationLabel ?pathogenType ?pathogenTypeLabel ?geoLocation ?geoLocationLabel #?controlMeasure ?controlMeasureLabel
+select distinct ?compiledSoftware ?compiledSoftwareLabel ?hostPopulation ?hostPopulationLabel ?hostType ?hostTypeLabel ?pathogenPopulation ?pathogenPopulationLabel ?pathogenType ?pathogenTypeLabel ?geoLocation ?geoLocationLabel ?controlMeasure ?controlMeasureLabel
 
 from <http://www.pitt.edu/obc/ide/apollo-sv>
 from <http://www.pitt.edu/obc/ide/classes-and-indexing-instances>
