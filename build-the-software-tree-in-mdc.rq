@@ -1,7 +1,7 @@
 prefix obo: <http://purl.obolibrary.org/obo/>
 prefix dc: <http://purl.org/dc/elements/1.1/>
 
-select ?softwareOrSubclass ?softwareOrSubclassLabel ?x ?prefTerm ?title ?sourceCodeRelease ?version ?doi ?doiURL ?synopsis ?sourceCodeRepositoryUrl ?executableName ?executableUrl ?webAppUrl ?licenseName ?licenseUrl ?documentationDescription ?documentationUrl ?websiteUrl ?developerName ?pubAbout ?pubThatUsedRelease ?inputSpecLabel ?outputSpecLabel ?olympus ?uidsConc ?measureLabel
+select ?softwareOrSubclass ?softwareOrSubclassLabel ?x ?prefTerm ?title ?sourceCodeRelease ?version ?doi ?doiURL ?synopsis ?sourceCodeRepositoryUrl ?executableName ?executableUrl ?webAppUrl ?licenseName ?licenseUrl ?documentationDescription ?documentationUrl ?websiteUrl ?developerName ?pubAbout ?pubThatUsedRelease ?inputSpecLabel ?outputSpecLabel ?olympus ?uids ?measureLabel
 from <http://www.pitt.edu/obc/ide/apollo-sv>
 from <http://www.pitt.edu/obc/ide/classes-and-indexing-instances>
 from <http://www.pitt.edu/obc/ide/article-instances>
@@ -144,6 +144,10 @@ where {
   			   ?execDisp obo:APOLLO_SV_00000543 ?execConc1 . 	#the disposition to execute the software has its basis in the concretization
   			   ?invokeDisp obo:BFO_0000169  ?execDisp .  #the UIDS disp to invoke the software specifically depends on the execute disposition
   			   ?invokeDisp obo:APOLLO_SV_00000543 ?uidsConc .  #the concretization of UIDS software is the basis for the invoke disposition
+  			   ?uidsExec obo:RO_0000058 ?uidsConc .  #the UIDS executable is concretized by the concretizaiton of UIDS
+  			   ?uidsCompiling obo:OBI_0000299 ?uidsExec . #the UIDS executable is the output of compiling UIDS source code
+  			   ?uidsCompiling obo:OBI_0000293 ?uidsSource . #the IDS compiling has the UIDS source code as input
+  			   ?uidsSource rdfs:label ?uids .  #get the label for UIDS
   			   } .
   #get control measures if any
   	OPTIONAL { ?v3 rdf:type obo:APOLLO_SV_00000525 .  #v2 is executable
