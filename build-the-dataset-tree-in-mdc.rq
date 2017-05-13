@@ -93,4 +93,5 @@ where {
   #filter out punned individuals
      FILTER ( ?x != obo:IAO_0000100 )
      FILTER ( ?x != ?datasetOrSubclass )
+     FILTER ( ?datasetOrSubclass != obo:APOLLO_SV_00000522)
      }
