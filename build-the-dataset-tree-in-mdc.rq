@@ -1,7 +1,7 @@
 prefix obo: <http://purl.obolibrary.org/obo/>
 prefix dc: <http://purl.org/dc/elements/1.1/>
 
-select ?datasetOrSubclass ?datasetOrSubclassLabel ?x ?prefTerm ?title ?formatSpecLabel ?version ?doi ?doiURL ?synopsis ?licenseName ?licenseUrl ?documentationDescription ?documentationUrl ?websiteUrl ?developerName ?pubAbout ?pubThatUsedRelease ?olympus
+select distinct ?datasetOrSubclass ?datasetOrSubclassLabel ?x ?datasetPrefTerm ?title ?formatSpecLabel ?accessPage ?version ?doi ?doiURL ?synopsis ?licenseName ?licenseUrl ?documentationDescription ?documentationUrl ?websiteUrl ?developerName ?pubAbout ?pubThatUsedRelease ?olympus
 from <http://www.pitt.edu/obc/ide/apollo-sv>
 from <http://www.pitt.edu/obc/ide/classes-and-indexing-instances>
 from <http://www.pitt.edu/obc/ide/article-instances>
@@ -12,11 +12,11 @@ where {
   ?x rdf:type ?datasetOrSubclass .
   ?datasetOrSubclass rdfs:subClassOf* obo:IAO_0000100 .
   ?datasetOrSubclass rdfs:label ?datasetOrSubclassLabel .
-  ?x obo:IAO_0000111 ?prefTerm .
+  ?x obo:IAO_0000111 ?datasetPrefTerm .
   #if there is a title annotation, get the title
  	OPTIONAL { ?x dc:title ?title } .
   #get URL to source code for this version if present
-  	OPTIONAL { ?x obo:ERO_0000480 ?sourceCodeRelease } .
+  	OPTIONAL { ?x obo:ERO_0000480 ?accessPage } .
   #get version if present
   	OPTIONAL { ?y rdf:type obo:APOLLO_SV_00000108 .
                ?y obo:IAO_0000219 ?x .
