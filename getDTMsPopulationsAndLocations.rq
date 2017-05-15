@@ -47,8 +47,6 @@ OPTIONAL {
 
 #If available, get the location.
 OPTIONAL {
-
-
  #get the biotic ecosystem of the population
  ?population obo:BFO_0000137 ?bioticEcosystem . #BFO_0000137 proper part of continuant at all times
  ?bioticEcosystem rdf:type obo:APOLLO_SV_00000104 .
@@ -60,6 +58,14 @@ OPTIONAL {
  ?ecosystem <http://www.obofoundry.org/ro/ro.owl#located_in> ?geoLocation .
  ?geoLocation rdfs:label ?geoLocationLabel
 }
+  
+#If available, get the control measure.
+OPTIONAL {
+	?simulatingOfProcessTypeX obo:OBI_0000299 ?controlMeasure .   #has specified output - obo:OBI_0000299
+  	?controlMeasure rdf:type/rdfs:subClassOf* obo:APOLLO_SV_00000086 . #control strategy -  obo:APOLLO_SV_00000086
+  	?controlMeasure rdfs:label ?controlMeasureLabel
+}
+
 
 }
 ORDER BY ?compiledSoftware
