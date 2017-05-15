@@ -60,11 +60,14 @@ OPTIONAL {
 }
   
 #If available, get the control measure.
-OPTIONAL {
-	?simulatingOfProcessTypeX obo:OBI_0000299 ?controlMeasure .   #has specified output - obo:OBI_0000299
+OPTIONAL 
+
+ {
+  	?simulatingOfProcessTypeX obo:OBI_0000299 ?controlMeasure .   #has specified output - obo:OBI_0000299
   	?controlMeasure rdf:type/rdfs:subClassOf* obo:APOLLO_SV_00000086 . #control strategy -  obo:APOLLO_SV_00000086
-  	?controlMeasure rdfs:label ?controlMeasureLabel
+    ?controlMeasure rdfs:label ?labelControlMeasure
 }
+
 
 
 }
