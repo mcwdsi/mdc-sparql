@@ -16,13 +16,12 @@ from <http://www.pitt.edu/obc/simulates-instances>
 
 
 where {
-?dtm rdf:type <http://purl.obolibrary.org/obo/APOLLO_SV_00000561> . #dtm is dtm software
+?dtm rdf:type <http://purl.obolibrary.org/obo/APOLLO_SV_00000561> . #x is dtm software
 ?dtm rdfs:label ?prefTerm .
 
 #get compiledSoftware that corresponds to dtm via a compiling process
 ?compilingProcess obo:OBI_0000293 ?dtm .
 ?compilingProcess obo:OBI_0000299 ?executable .
-
 
 #get compiled software that achieves planned objective simulating of process type x
   ?simulatingOfProcessTypeX obo:OBI_0000417 ?executable . #achieves planned objective obo:OBI_0000417
@@ -37,7 +36,7 @@ where {
   
 #If available, get (1) the pathogen populations that are simulated, (2) their labels, (3) the type of pathogens, and (4) the label for the pathogen type.
 OPTIONAL {
-    ?population rdf:type/rdfs:subClassOf* <##PATHOGEN##> .  #default  http://www.pitt.edu/obc/IDE_0000000007
+    ?population rdf:type/rdfs:subClassOf* <http://www.pitt.edu/obc/IDE_0000000007> .  #default  
     ?population rdfs:label ?pathogenPopulationLabel .
   ?population a ?pathogenType .
   ?pathogenType rdfs:label ?pathogenTypeLabel .
@@ -45,7 +44,7 @@ OPTIONAL {
 
  #If available, get (1) the host populations that are simulated, (2) their labels, (3) the type of host, and (4) the label for the host type.
 OPTIONAL {
-  ?population rdf:type/rdfs:subClassOf* <##HOST##> .  #default http://purl.obolibrary.org/obo/APOLLO_SV_00000516
+  ?population rdf:type/rdfs:subClassOf* <http://purl.obolibrary.org/obo/APOLLO_SV_00000516> .  #default 
   ?population rdfs:label ?hostPopulationLabel .
   ?population a ?hostType .
   ?hostType rdfs:label ?hostTypeLabel .
@@ -61,7 +60,7 @@ OPTIONAL {
  ?ecosystem rdf:type obo:APOLLO_SV_00000097 .
  #get the geographic region/location of the ecosystem.
  ?ecosystem <http://www.obofoundry.org/ro/ro.owl#located_in> ?geoLocation .
- ?geoLocation obo:BFO_0000137*  <##LOCATION##> . #default http://purl.obolibrary.org/obo/GEO_000000345 
+ ?geoLocation obo:BFO_0000137*  <http://purl.obolibrary.org/obo/GEO_000000345> . #default  
  ?geoLocation rdfs:label ?geoLocationLabel
 }
 
