@@ -150,8 +150,8 @@ where {
   			   ?uidsSource rdfs:label ?uids .  #get the label for UIDS
   			   } .
   #get control measures if any
-  	OPTIONAL { ?v3 rdf:type obo:APOLLO_SV_00000525 .  #v2 is executable
-  			   ?u3 rdf:type obo:APOLLO_SV_00000524 .  #u2 is compiling
+  	OPTIONAL { ?v3 rdf:type obo:APOLLO_SV_00000525 .  #v3 is executable
+  			   ?u3 rdf:type obo:APOLLO_SV_00000524 .  #u3 is compiling
   			   ?u3 obo:OBI_0000293 ?x .               #compiling has source code as input
   			   ?u3 obo:OBI_0000299 ?v3 .               #compiling has executable as output
   			   ?simulatingx obo:OBI_0000417 ?v3 .	#simulatingx achieves objective of executable

@@ -1,8 +1,8 @@
 prefix obo: <http://purl.obolibrary.org/obo/>
-PREFIX obc: <http://www.pitt.edu/obc/>
+prefix obc: <http://www.pitt.edu/obc/>
 prefix dc: <http://purl.org/dc/elements/1.1/>
 
-select distinct ?pathogenTypeLabel
+select distinct ?hostTypeLabel
 
 #select distinct *  
 
@@ -16,7 +16,7 @@ from <http://www.pitt.edu/obc/simulates-instances>
 
 
 where {
-?dtm rdf:type <http://purl.obolibrary.org/obo/APOLLO_SV_00000561> . #x is dtm software
+?dtm rdf:type <http://purl.obolibrary.org/obo/APOLLO_SV_00000561> . #dtm is dtm software
 
 #get compiledSoftware that corresponds to dtm via a compiling process
 ?compilingProcess obo:OBI_0000293 ?dtm .
@@ -32,11 +32,11 @@ where {
   ?simulationOfPopulation rdf:type/rdfs:subClassOf* obo:APOLLO_SV_00000031  .
   ?simulationOfPopulation obo:APOLLO_SV_00000067 ?population .
   
-# get (1) the pathogen populations that are simulated, (2) their labels, (3) the type of pathogens, and (4) the label for the pathogen type.
+# get (1) the host populations that are simulated, (2) their labels, (3) the type of host, and (4) the label for the host type.
 
-    ?population rdf:type/rdfs:subClassOf* obo:APOLLO_SV_00000516 .
-    #?population rdfs:label ?pathogenPopulationLabel .
-  ?population a ?pathogenType .
-  ?pathogenType rdfs:label ?pathogenTypeLabel .
+   ?population rdf:type/rdfs:subClassOf* obo:APOLLO_SV_00000516 .
+   #?population rdfs:label ?hostPopulationLabel .
+   ?population a ?hostType .
+   ?hostType rdfs:label ?hostTypeLabel .
 }
-order by ?pathogenTypeLabel
+order by ?hostTypeLabel
