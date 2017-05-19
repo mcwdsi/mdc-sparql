@@ -2,7 +2,7 @@ prefix obo: <http://purl.obolibrary.org/obo/>
 prefix obc: <http://www.pitt.edu/obc/>
 prefix dc: <http://purl.org/dc/elements/1.1/>
 
-select distinct ?hostTypeLabel
+select distinct ?hostTypeLabel ?hostType
 
 #select distinct *  
 
