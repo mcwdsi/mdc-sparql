@@ -1,0 +1,7 @@
+    
+    ?simulatingy obo:OBI_0000417 ?executable . #simulatingy achieves objective of executable
+    ?simulatingy rdf:type obo:APOLLO_SV_00000005  .  #simulatingy is instance of process of simulating process of type X
+    ?simulatingy obo:OBI_0000299 ?measure .  #simulatingy has output an infectious disease control measure
+    ?measure rdf:type ?searchMeasureType . #control measure is an instance of a particular type
+    ?searchMeasureType rdfs:label ?searchMeasureLabel . #get the label on the measure type
+    ?searchMeasureType rdfs:subClassOf* <##CONTROLMEASURE_IRI##> . #APOLLO_SV_00000086 is default
