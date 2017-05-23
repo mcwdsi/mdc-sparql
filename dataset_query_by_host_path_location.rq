@@ -14,16 +14,16 @@ where {
   ?datasetOrSubclass rdfs:label ?datasetOrSubclassLabel .
   ?x obo:IAO_0000111 ?datasetPrefTerm .
   ?x obo:IAO_0000136/obo:RO_0000057* ?population .
-  ?population rdf:type/rdfs:subClassOf* ##HOST## .
+  ?population rdf:type/rdfs:subClassOf* <##HOST##> .
   ?population rdf:type ?populationType .
   ?populationType rdfs:label ?populationTypeLabel .
   ?population obo:BFO_0000137* ?ecosystem .
   ?ecosystem rdf:type obo:APOLLO_SV_00000097 .
   ?ecosystem <http://www.obofoundry.org/ro/ro.owl#located_in> ?geoLocation .
-  ?geoLocation obo:BFO_0000137*  ##LOCATION## . #default  
+  ?geoLocation obo:BFO_0000137*  <##LOCATION##> . #default  
   ?geoLocation rdfs:label ?geoLocationLabel .
    ?x obo:IAO_0000136/obo:RO_0000057* ?population2 .
-  ?population2 rdf:type/rdfs:subClassOf* ##PATHOGEN## .
+  ?population2 rdf:type/rdfs:subClassOf* <##PATHOGEN##> .
   ?population2 obo:BFO_0000137* ?ecosystem .
   #if there is a title annotation, get the title
  	OPTIONAL { ?x dc:title ?title } .
