@@ -1,7 +1,7 @@
-prefix obo: <http://purl.obolibrary.org/obo/>
+ prefix obo: <http://purl.obolibrary.org/obo/>
 prefix dc: <http://purl.org/dc/elements/1.1/>
 
-select ?dataset ?x1 ?prefTerm1 (?specLabel as ?outputSpec) ?x ?prefTerm (?specLabel as ?inputSpec)
+select ?dataset ?prefTerm2 ?datasetLabel ?x1 ?prefTerm1 (?specLabel as ?outputSpec) ?x ?prefTerm (?specLabel as ?inputSpec)
 #select distinct ?dataset
 
 from <http://www.pitt.edu/obc/ide/apollo-sv>
@@ -25,11 +25,14 @@ where {
   ?spec rdf:type obo:IAO_0000098 . #input spec is data format spec
   ?spec rdfs:label ?specLabel .#input spec label
 
- ?dataset rdf:type ?ds .
- ?ds rdfs:subClassOf* obo:IAO_0000100 .  #?ds is an instance of dataset
- ?p obo:OBI_0000299 ?dataset . #the dataset is the specificied output of p
+  ?dataset rdf:type ?ds .
+  ?ds rdfs:subClassOf* obo:IAO_0000100 .  #?ds is an instance of dataset
   ?p obo:OBI_0000299 ?dataset . #the dataset is the specificied output of p
-?p obo:OBI_0000417 ?spec . #p achieves planned objective ?spec
+  ?p obo:OBI_0000299 ?dataset . #the dataset is the specificied output of p
+  ?p obo:OBI_0000417 ?spec . #p achieves planned objective ?spec
+  ?dataset obo:IAO_0000111 ?prefTerm2 .   #?dataset has a preferred term
+  OPTIONAL {?dataset rdfs:label ?datasetLabel} .
+
 
   
   ?x1 rdf:type ?y1 .
