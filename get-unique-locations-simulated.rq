@@ -63,4 +63,4 @@ UNION
 } 
  FILTER (?geoLocation != obo:GEO_000000345)
 }
-order by ?geoLocationFullLabel
+order by ?geoLocationLabel
