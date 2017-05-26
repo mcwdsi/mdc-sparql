@@ -11,7 +11,7 @@ from <http://www.pitt.edu/obc/mdc/content>
 where {
   ?x rdf:type ?softwareOrSubclass .
   ?softwareOrSubclass rdfs:subClassOf* obo:IAO_0000010 .
-  ?x obo:IAO_0000111 ?prefTerm .
+
   ?z rdf:type obo:OBI_0002110 .
   ?z obo:IAO_0000219 ?x .
   #filter out punned individuals
