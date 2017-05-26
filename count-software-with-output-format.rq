@@ -11,7 +11,7 @@ from <http://www.pitt.edu/obc/mdc/content>
 where {
   ?x rdf:type ?softwareOrSubclass .
   ?softwareOrSubclass rdfs:subClassOf* obo:IAO_0000010 .
-  ?x obo:IAO_0000111 ?prefTerm .
+
   ?v rdf:type obo:APOLLO_SV_00000525 .  #v is executable
   ?u rdf:type obo:APOLLO_SV_00000524 .  #u is compiling
   ?u obo:OBI_0000293 ?x .               #compiling has source code as input
