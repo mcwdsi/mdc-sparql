@@ -209,10 +209,6 @@ where {
            ?measureType rdfs:label ?measureLabel . #get the label on the measure type
            ?measureType rdfs:subClassOf* obo:APOLLO_SV_00000086 #control measure type must be a type of control measure (otherwise we get other ICE/PIE output by simulation)
         } .
-  #get hostPopulation if any
-  OPTIONAL {
-
-  }.
   #filter out punned individuals
      FILTER ( ?dtm != obo:APOLLO_SV_00000561 )
      }
