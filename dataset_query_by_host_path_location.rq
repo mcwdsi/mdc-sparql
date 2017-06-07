@@ -25,6 +25,11 @@ where {
    ?x obo:IAO_0000136/obo:RO_0000057* ?population2 .
   ?population2 rdf:type/rdfs:subClassOf* <##PATHOGEN##> .
   ?population2 obo:BFO_0000137* ?ecosystem .
+
+  ##CONTROL_MEASURE_CLAUSE##   #if user picks a control measure, replace with:
+  #		?x   obo:IAO_0000136 ?control_measure .
+  #		?control_measure rdf:type/rdfs:subClassOf* <CM1_IRI> .
+
   #if there is a title annotation, get the title
  	OPTIONAL { ?x dc:title ?title } .
   #get URL to source code for this version if present
