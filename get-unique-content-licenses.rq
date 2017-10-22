@@ -1,0 +1,29 @@
+prefix obo: <http://purl.obolibrary.org/obo/>
+PREFIX obc: <http://www.pitt.edu/obc/>
+prefix dc: <http://purl.org/dc/elements/1.1/>
+
+select distinct ?licenseLabel ?licenseIri
+
+#select distinct *  
+
+from <http://www.pitt.edu/obc/ide/apollo-sv>
+from <http://www.pitt.edu/obc/ide/classes-and-indexing-instances>
+from <http://www.pitt.edu/obc/ide/article-instances>
+from <http://www.pitt.edu/obc/ide/article-deleted-instances>
+from <http://ide.obc.io/auth>
+from <http://www.pitt.edu/obc/mdc/content>
+from <http://www.pitt.edu/obc/simulates-instances>
+
+
+where {
+ {
+   ?licenseIri rdf:type <http://purl.obolibrary.org/obo/APOLLO_SV_00000535> . #x is a license
+   ?licenseIri rdfs:label ?licenseLabel
+ }
+  UNION 
+ {
+  	 ?licenseIri rdf:type <http://purl.obolibrary.org/obo/APOLLO_SV_00000798> . #x is a license
+   ?licenseIri rdfs:label ?licenseLabel
+ }
+}
+order by lcase(?licenseLabel)
