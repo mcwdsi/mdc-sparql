@@ -1,0 +1,35 @@
+INSERT DATA
+{
+	GRAPH <http://www.pitt.edu/obc/ide/article-instances> {
+
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000012>	<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>	<http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000012>	<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>	<http://purl.obolibrary.org/obo/OBI_0001636> .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000012>	<http://purl.org/dc/elements/1.1/title>	"Intra-patient Evolution of HIV"@en .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000012>	<http://purl.obolibrary.org/obo/IDE_0000000171>	"NEHER, RICHARD"@en .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000012>	<http://purl.obolibrary.org/obo/IDE_0000000172> "ERC-2010-StG_20091118"@en .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000012>	<http://purl.obolibrary.org/obo/IDE_0000000173> "European Research Council"@en .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000012>	<http://purl.obolibrary.org/obo/IDE_0000000174> "Max Planck Society for the Advancement of Science"@en .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000012>	<http://purl.obolibrary.org/obo/IDE_0000000174> "Karolinska Institute"@en .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000012>	<http://purl.obolibrary.org/obo/IDE_0000000169> "2011-03-01T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000012>	<http://purl.obolibrary.org/obo/IDE_0000000170> "2016-02-29T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000014>	<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>	<http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000014>	<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>	<http://purl.obolibrary.org/obo/OBI_0001636> .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000014>	<http://purl.org/dc/elements/1.1/title>	"HyPhy: Molecular Evolutionary Analyses"@en .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000014>	<http://purl.obolibrary.org/obo/IDE_0000000171>	"MUSE, SPENCER V"@en .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000014>	<http://purl.obolibrary.org/obo/IDE_0000000172> "PAR-08-010"@en .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000014>	<http://purl.obolibrary.org/obo/IDE_0000000173> "National Institute for General Medical Sciences"@en .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000014>	<http://purl.obolibrary.org/obo/IDE_0000000174> "North Carolina State University Raleigh"@en .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000014>	<http://purl.obolibrary.org/obo/IDE_0000000169> "2010-09-15T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000014>	<http://purl.obolibrary.org/obo/IDE_0000000170> "2014-08-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000016>	<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>	<http://www.w3.org/2002/07/owl#NamedIndividual> .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000016>	<http://www.w3.org/1999/02/22-rdf-syntax-ns#type>	<http://purl.obolibrary.org/obo/OBI_0001636> .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000016>	<http://purl.org/dc/elements/1.1/title>	"Statistical Methods for Real-time Forecasts of Infectious Disease: Dynamic Time-series and Machine Learning Approaches"@en .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000016>	<http://purl.obolibrary.org/obo/IDE_0000000171>	"REICH, NICHOLAS G"@en .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000016>	<http://purl.obolibrary.org/obo/IDE_0000000172> "RFA-GM-16-003"@en .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000016>	<http://purl.obolibrary.org/obo/IDE_0000000173> "National Institute for General Medical Sciences"@en .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000016>	<http://purl.obolibrary.org/obo/IDE_0000000174> "University of Massachusetts Amherst"@en .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000016>	<http://purl.obolibrary.org/obo/IDE_0000000169> "2016-09-01T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+<http://www.pitt.edu/obc/IDE_ARTICLE_0000000016>	<http://purl.obolibrary.org/obo/IDE_0000000170> "2021-08-31T00:00:00"^^<http://www.w3.org/2001/XMLSchema#dateTime> .
+
+	}
+}
