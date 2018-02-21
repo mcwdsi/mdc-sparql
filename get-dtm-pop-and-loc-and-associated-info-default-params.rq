@@ -1,6 +1,6 @@
 
 prefix obo: <http://purl.obolibrary.org/obo/>
-PREFIX obc: <http://www.pitt.edu/obc/>
+prefix obc: <http://www.pitt.edu/obc/>
 prefix dc: <http://purl.org/dc/elements/1.1/>
 
 select ?dtm ?prefTerm ?title ?sourceCodeRelease ?version ?doi ?doiURL ?synopsis ?sourceCodeRepositoryUrl ?webAppUrl ?licenseName ?licenseUrl ?documentationDescription ?documentationUrl ?websiteUrl ?developerName ?pubAbout ?pubThatUsedRelease ?inputSpecLabel ?outputSpecLabel ?olympus ?uidsConc ?measureLabel ?hostPopulation ?hostPopulationLabel ?hostType ?hostTypeLabel ?pathogenPopulation ?pathogenPopulationLabel ?pathogenType ?pathogenTypeLabel ?geoLocation ?geoLocationLabel

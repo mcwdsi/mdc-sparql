@@ -9,13 +9,24 @@ from <http://www.pitt.edu/obc/ide/article-deleted-instances>
 from <http://ide.obc.io/auth>
 from <http://www.pitt.edu/obc/mdc/content>
 where {
+  #the item (?x) is in the MIDAS Digital Commons
+  <http://www.pitt.edu/obc/IDE_ARTICLES_12000070095> obo:BFO_0000174 ?x  .
+
+  #the item (?x) is an instance of a class (?datasetOrSubclass)
   ?x rdf:type ?datasetOrSubclass .
+
+  #the class (?datasetOrSubclass) is either "data set" or some descendant of "data set"
   ?datasetOrSubclass rdfs:subClassOf* obo:IAO_0000100 .
+
+  #get the label of the class
   ?datasetOrSubclass rdfs:label ?datasetOrSubclassLabel .
+
+  #get the editor preferred term of the data set
   ?x obo:IAO_0000111 ?datasetPrefTerm .
-  #if there is a title annotation, get the title
+
+  #if there is a title annotation, get the title of the data set
  	OPTIONAL { ?x dc:title ?title } .
-  #get URL to source code for this version if present
+  #get URL to data set access page if present 
   	OPTIONAL { ?x obo:ERO_0000480 ?accessPage } .
   #get version if present
   	OPTIONAL { ?y rdf:type obo:APOLLO_SV_00000108 .
