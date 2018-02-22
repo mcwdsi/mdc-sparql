@@ -9,10 +9,21 @@ from <http://www.pitt.edu/obc/ide/article-deleted-instances>
 from <http://ide.obc.io/auth>
 from <http://www.pitt.edu/obc/mdc/content>
 where {
+  #the item (?x) is in the MIDAS Digital Commons
+  <http://www.pitt.edu/obc/IDE_ARTICLES_12000070095> obo:BFO_0000174 ?x  .
+
+  #the item (?x) is and instance of a class (?softwareOrSubclass)
   ?x rdf:type ?softwareOrSubclass .
+
+  #the class (?softwareOrSubclass) is either software or some subclass of software
   ?softwareOrSubclass rdfs:subClassOf* obo:IAO_0000010 .
+
+  #get the label of the class of which ?x is an instance
   ?softwareOrSubclass rdfs:label ?softwareOrSubclassLabel .
+
+  #get the preferred term of the item (?x)
   ?x obo:IAO_0000111 ?prefTerm .
+  
   #if there is a title annotation, get the title
  	OPTIONAL { ?x dc:title ?title } .
   #get URL to source code for this version if present
