@@ -9,10 +9,22 @@ from <http://www.pitt.edu/obc/ide/article-deleted-instances>
 from <http://ide.obc.io/auth>
 from <http://www.pitt.edu/obc/mdc/content>
 where {
+ #the item (?x) is in the MIDAS Digital Commons
+  <http://www.pitt.edu/obc/IDE_ARTICLES_12000070095> obo:BFO_0000174 ?x  .
+
+  #the item (?x) is an instance of a class (?datasetOrSubclass)
   ?x rdf:type ?datasetOrSubclass .
+
+  #the class (?datasetOrSubclass) is either "data set" or some descendant of "data set"
   ?datasetOrSubclass rdfs:subClassOf* obo:IAO_0000100 .
+
+  #get the label of the class
   ?datasetOrSubclass rdfs:label ?datasetOrSubclassLabel .
+
+  #get the editor preferred term of the data set
   ?x obo:IAO_0000111 ?datasetPrefTerm .
+
+  #block of clauses that restrict by host and pathogen populations and location
   ?x obo:IAO_0000136/obo:RO_0000057* ?population .
   ?population rdf:type/rdfs:subClassOf* <##HOST##> .
   ?population rdf:type ?populationType .
