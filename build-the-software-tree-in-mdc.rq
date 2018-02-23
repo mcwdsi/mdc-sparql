@@ -208,9 +208,51 @@ where {
   	?forecasting obo:OBI_0000299 ?nowcastInd .
   	?nowcastInd rdfs:label ?nowcast
   } .
-  #get visualizationType if any
   #get forecastFrequency if any
+  OPTIONAL {
+    # the item (?x) is an instance of disease forecaster
+    ?x rdf:type obo:APOLLO_SV_00000557 .
+    # there is a simulator time step specification that is part of the forecaster
+    ?simulatorTimeStepSpec obo:BFO_0000050 ?x .
+    ?simulatorTimeStepSpec rdf:type obo:APOLLO_SV_00000068 .
+    # the simulator time step specification has a value specification
+    ?simulatorTimeStepSpec obo:OBI_0001938 ?valueSpec .
+    #the value specification has a time unit.  This is the frequency. Note that we assume the value of value spec is one.  That might have to change someday.
+    ?valueSpec obo:IAO_0000039 ?forecastFrequencyInd .
+    ?forecastFrequencyInd rdfs:label ?forecastFrequency
+  } .
+  #get visualizationType if any
+  OPTIONAL {
+    # the item (?x) is an instance of data visualizer
+    ?x rdf:type obo:APOLLO_SV_00000564 .
+    # there is a compiling of the visualizeer
+    ?u5 obo:OBI_0000293 ?x . 
+    # compiling outputs an executable
+    ?u5 obo:OBI_0000299 ?v5 .
+    ?v5 rdf:type obo:APOLLO_SV_00000525 .
+    # the executable was run 
+    ?visualizing obo:OBI_0000417 ?v5 .
+    # the run of the executable has specified input - that's the type of data being visualized
+    ?visualizing obo:OBI_0000293 ?visualizationInd .
+    ?visualizationInd rdf:type/rdfs:subClassOf* obo:IAO_0000100 .
+    ?visualizationInd rdfs:label ?visualizationType    
+  } .
   #get grantFunding if any
+  OPTIONAL {
+    #the item is the output of a code writing (aka software developing) process
+    ?codeWriting obo:OBI_0000299 ?x .
+    #the code writing process is part of a research (study execution) process
+    ?codeWriting  obo:BFO_0000050 ?research .
+    ?research rdf:type  obo:OBI_0000011 .
+    #the study execution process achieves the planned objective of some grant
+    ?research obo:OBI_0000417 ?grantInd .
+    ?grantInd rdf:type obo:OBI_0001636 .
+    #there is a grant identifier that denotes the grant
+    ?grantId obo:IAO_0000219  ?grantInd .
+    ?grantId rdf:type obo:OBI_0001629 . 
+    #get the label of the grant identifier individual
+    ?grantId rdfs:label ?grantFunding
+  } .
   #filter out punned individuals
   #filter out punned individuals
      FILTER ( ?x != obo:IAO_0000010 )
