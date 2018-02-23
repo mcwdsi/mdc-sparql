@@ -1,7 +1,7 @@
 prefix obo: <http://purl.obolibrary.org/obo/>
 prefix dc: <http://purl.org/dc/elements/1.1/>
 
-select ?softwareOrSubclass ?softwareOrSubclassLabel ?x ?prefTerm ?title ?sourceCodeRelease ?version ?doi ?doiURL ?synopsis ?sourceCodeRepositoryUrl ?executableName ?executableUrl ?webAppUrl ?licenseName ?licenseUrl ?documentationDescription ?documentationUrl ?websiteUrl ?developerName ?pubAbout ?pubThatUsedRelease ?inputSpecLabel ?outputSpecLabel ?olympus ?uids ?measureLabel
+select ?softwareOrSubclass ?softwareOrSubclassLabel ?x ?prefTerm ?title ?sourceCodeRelease ?version ?doi ?doiURL ?synopsis ?sourceCodeRepositoryUrl ?executableName ?executableUrl ?webAppUrl ?licenseName ?licenseUrl ?documentationDescription ?documentationUrl ?websiteUrl ?developerName ?pubAbout ?pubThatUsedRelease ?inputSpecLabel ?outputSpecLabel ?olympus ?uids ?measureLabel ?forecast ?nowcast ?forecastFrequency ?visualizationType ?grantFunding 
 from <http://www.pitt.edu/obc/ide/apollo-sv>
 from <http://www.pitt.edu/obc/ide/classes-and-indexing-instances>
 from <http://www.pitt.edu/obc/ide/article-instances>
@@ -172,6 +172,46 @@ where {
   			   ?measureType rdfs:label ?measureLabel . #get the label on the measure type
   			   ?measureType rdfs:subClassOf* obo:APOLLO_SV_00000086 #control measure type must be a type of control measure (otherwise we get other ICE/PIE output by simulation)
   			} .
+  #get forecasts if any
+  OPTIONAL {
+  	# the item (?x) is an instance of disease forecaster
+  	?x rdf:type obo:APOLLO_SV_00000557 .
+  	# there is a forecasting objective that is part of the forecaster
+  	?forecastingObjective obo:BFO_0000050 ?x .
+  	?forecastingObjective rdf:type obo:APOLLO_SV_00000581 .
+  	# there is a compiling of the forecaster
+  	?u4 obo:OBI_0000293 ?x . 
+  	# compiling outputs executable
+  	?u4 obo:OBI_0000299 ?v4 .
+  	?v4 rdf:type obo:APOLLO_SV_00000525 .
+  	# the executable was run 
+  	?forecasting obo:OBI_0000417 ?v4 .
+  	# the run of the executable has specified output - that's the forecast
+  	?forecasting obo:OBI_0000299 ?forecastInd .
+  	?forecastInd rdfs:label ?forecast
+  } .
+  #get nowcasts if any 
+  OPTIONAL {
+ 	# the item (?x) is an instance of disease forecaster
+  	?x rdf:type obo:APOLLO_SV_00000557 .
+  	# there is a nowcasting objective that is part of the forecaster
+  	?nowcastingObjective obo:BFO_0000050 ?x .
+  	?nowcastingObjective rdf:type obo:APOLLO_SV_00000582 .
+  	# there is a compiling of the forecaster
+  	?u4 obo:OBI_0000293 ?x . 
+  	# compiling outputs executable
+  	?u4 obo:OBI_0000299 ?v4 .
+  	?v4 rdf:type obo:APOLLO_SV_00000525 .
+  	# the executable was run 
+  	?forecasting obo:OBI_0000417 ?v4 .
+  	# the run of the executable has specified output - that's the nowcast
+  	?forecasting obo:OBI_0000299 ?nowcastInd .
+  	?nowcastInd rdfs:label ?nowcast
+  } .
+  #get visualizationType if any
+  #get forecastFrequency if any
+  #get grantFunding if any
+  #filter out punned individuals
   #filter out punned individuals
      FILTER ( ?x != obo:IAO_0000010 )
      FILTER ( ?x != ?softwareOrSubclass )
