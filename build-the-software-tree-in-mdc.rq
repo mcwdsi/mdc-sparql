@@ -1,7 +1,7 @@
 prefix obo: <http://purl.obolibrary.org/obo/>
 prefix dc: <http://purl.org/dc/elements/1.1/>
 
-select ?softwareOrSubclass ?softwareOrSubclassLabel ?x ?prefTerm ?title ?sourceCodeRelease ?version ?doi ?doiURL ?synopsis ?sourceCodeRepositoryUrl ?executableName ?executableUrl ?webAppUrl ?licenseName ?licenseUrl ?documentationDescription ?documentationUrl ?websiteUrl ?developerName ?pubAbout ?pubThatUsedRelease ?inputSpecLabel ?outputSpecLabel ?olympus ?uids ?measureLabel ?forecast ?nowcast ?forecastFrequency ?visualizationType ?grantFunding 
+select ?softwareOrSubclass ?softwareOrSubclassLabel ?x ?prefTerm ?title ?sourceCodeRelease ?version ?doi ?doiURL ?synopsis ?sourceCodeRepositoryUrl ?executableName ?executableUrl ?webAppUrl ?licenseName ?licenseUrl ?documentationDescription ?documentationUrl ?websiteUrl ?developerName ?pubAbout ?pubThatUsedRelease ?inputSpecLabel ?outputSpecLabel ?olympus ?uids ?measureLabel ?forecast ?nowcast ?forecastType ?forecastFrequency ?visualizationType ?grantFunding 
 from <http://www.pitt.edu/obc/ide/apollo-sv>
 from <http://www.pitt.edu/obc/ide/classes-and-indexing-instances>
 from <http://www.pitt.edu/obc/ide/article-instances>
@@ -220,6 +220,14 @@ where {
     #the value specification has a time unit.  This is the frequency. Note that we assume the value of value spec is one.  That might have to change someday.
     ?valueSpec obo:IAO_0000039 ?forecastFrequencyInd .
     ?forecastFrequencyInd rdfs:label ?forecastFrequency
+  } .
+  # get forecaster type if any
+  OPTIONAL {
+    # there is an objective that is part of the forecaster
+    ?forecastObjectiveInd obo:BFO_0000050 ?x .
+    ?forecastObjectiveInd rdf:type ?forecastObjectiveType .
+    ?forecastObjectiveType rdfs:label ?forecastType .
+    ?forecastObjectiveType rdfs:subClassOf* obo:IAO_0000005
   } .
   #get visualizationType if any
   OPTIONAL {
