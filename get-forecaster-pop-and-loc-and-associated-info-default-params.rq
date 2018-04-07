@@ -17,6 +17,9 @@ from <http://www.pitt.edu/obc/simulates-instances>
 
 
 where {
+    #the item (?dtm) is in the MIDAS Digital Commons
+  <http://www.pitt.edu/obc/IDE_ARTICLES_12000070095> obo:BFO_0000174 ?dtm  .
+  
 ?dtm rdf:type/rdfs:subClassOf* <http://purl.obolibrary.org/obo/APOLLO_SV_00000557>. #<http://purl.obolibrary.org/obo/APOLLO_SV_00000007> . #x is simulation software
 ?dtm rdfs:label ?prefTerm .
 
