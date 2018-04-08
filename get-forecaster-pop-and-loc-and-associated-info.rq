@@ -202,7 +202,7 @@ where {
            ?simulatingx obo:OBI_0000299 ?measure .  #simulatingx has output an infectious disease control measure
            ?measure rdf:type ?measureType . #control measure is an instance of a particular type
            ?measureType rdfs:label ?measureLabel . #get the label on the measure type
-           ?measureType rdfs:subClassOf* obo:APOLLO_SV_00000086 #control measure type must be a type of control measure (otherwise we get other ICE/PIE output by simulation)
+           ?measureType rdfs:subClassOf* <##CONTROL_MEASURE_IRI##> #control measure type must be a type of control measure (otherwise we get other ICE/PIE output by simulation)
 ##TOGGLE  } 
     .
   #get forecasts if any
