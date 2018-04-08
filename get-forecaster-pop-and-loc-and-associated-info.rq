@@ -17,6 +17,9 @@ from <http://www.pitt.edu/obc/simulates-instances>
 
 
 where {
+    #the item (?dtm) is in the MIDAS Digital Commons
+  <http://www.pitt.edu/obc/IDE_ARTICLES_12000070095> obo:BFO_0000174 ?dtm  .
+  
 ?dtm rdf:type/rdfs:subClassOf* <http://purl.obolibrary.org/obo/APOLLO_SV_00000557>. #<http://purl.obolibrary.org/obo/APOLLO_SV_00000007> . #x is simulation software
 ?dtm rdfs:label ?prefTerm .
 
@@ -34,25 +37,11 @@ where {
   ?simulationOfHostPopulation rdf:type/rdfs:subClassOf* obo:APOLLO_SV_00000031  .
   ?simulationOfHostPopulation obo:APOLLO_SV_00000067 ?hostPopulation .
 
-  ?hostPopulation rdf:type/rdfs:subClassOf* <http://purl.obolibrary.org/obo/APOLLO_SV_00000516> .  #default 
+  ?hostPopulation rdf:type/rdfs:subClassOf* ##HOST## .
   ?hostPopulation rdfs:label ?hostPopulationLabel .
   ?hostPopulation a ?hostType .
   ?hostType rdfs:label ?hostTypeLabel .
 
-  ##PATHOGEN CLAUSE##   #if user also picks a pathogen, replace with:
-  # ?simulatingOfProcessTypeX obo:OBI_0000299 ?simulationOfPathogenPopulation .   #has specified output - obo:OBI_0000299
-  # ?simulationOfPathogenPopulation rdf:type/rdfs:subClassOf* obo:APOLLO_SV_00000031  .
-  # ?simulationOfPathogenPopulation obo:APOLLO_SV_00000067 ?pathogenPopulation .
-  #
-  # ?pathogenPopulation rdf:type/rdfs:subClassOf* <##PATHOGEN##> .  #default 
-  # ?pathogenPopulation rdfs:label ?pathogenPopulationLabel .
-  # ?pathogenPopulation a ?pathogenType .
-  # ?pathogenType rdfs:label ?pathogenTypeLabel .
-  # ?pathogenPopulation obo:BFO_0000137 ?bioticEcosystem . 
-
-  ##CONTROL_MEASURE_CLAUSE##   #if user picks a control measure, replace with:
-  #   ?dtm   obo:IAO_0000136 ?control_measure .
-  #   ?control_measure rdf:type/rdfs:subClassOf* <CM1_IRI> .
 
  #get the biotic ecosystem of the populations
  #BFO_0000137 proper part of continuant at all times
@@ -64,7 +53,7 @@ where {
  ?ecosystem rdf:type obo:APOLLO_SV_00000097 .
  #get the geographic region/location of the ecosystem.
  ?ecosystem <http://www.obofoundry.org/ro/ro.owl#located_in> ?geoLocation .
- ?geoLocation obo:BFO_0000137*  <http://purl.obolibrary.org/obo/GEO_000000345> . #default  
+ ?geoLocation obo:BFO_0000137*  ##LOCATION##  .
  ?geoLocation rdfs:label ?geoLocationLabel .
 
 
@@ -288,6 +277,6 @@ where {
     ?grantId rdfs:label ?grantFunding
   } .
   #filter out punned individuals
-     FILTER ( ?dtm != obo:APOLLO_SV_00000561 )
+     FILTER ( ?dtm != obo:APOLLO_SV_00000557 )
      }  
   ORDER BY ?dtm

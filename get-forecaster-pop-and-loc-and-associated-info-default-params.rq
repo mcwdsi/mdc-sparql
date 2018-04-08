@@ -277,6 +277,6 @@ where {
     ?grantId rdfs:label ?grantFunding
   } .
   #filter out punned individuals
-     FILTER ( ?dtm != obo:APOLLO_SV_00000561 )
+     FILTER ( ?dtm != obo:APOLLO_SV_00000557 )
      }  
   ORDER BY ?dtm
