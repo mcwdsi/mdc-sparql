@@ -20,7 +20,7 @@ where {
     #the item (?dtm) is in the MIDAS Digital Commons
   <http://www.pitt.edu/obc/IDE_ARTICLES_12000070095> obo:BFO_0000174 ?dtm  .
   
-?dtm rdf:type/rdfs:subClassOf* <http://purl.obolibrary.org/obo/APOLLO_SV_00000544>. #<http://purl.obolibrary.org/obo/APOLLO_SV_00000007> . #x is simulation software
+?dtm rdf:type/rdfs:subClassOf* <http://purl.obolibrary.org/obo/APOLLO_SV_00000540>. #<http://purl.obolibrary.org/obo/APOLLO_SV_00000007> . #x is simulation software
 ?dtm rdfs:label ?prefTerm .
 
 #get compiledSoftware that corresponds to dtm via a compiling process
@@ -32,22 +32,22 @@ where {
   ?executable rdf:type/rdfs:subClassOf* obo:APOLLO_SV_00000525 . 
   ?executionProcess rdf:type obo:OBIws_0000050 .
 
-#execution process has input dna sequence dataset
-  ?executionProcess obo:OBI_0000293 ?dnaSequenceData .   #has specified input - obo:OBI_0000293
-  ?dnaSequenceData rdf:type/rdfs:subClassOf* obo:OBI_0001573  .
+#execution process has input dataset
+  ?executionProcess obo:OBI_0000293 ?populationData .   #has specified input - obo:OBI_0000293
+  ?populationData rdf:type/rdfs:subClassOf* obo:IAO_0000100  .
 
-#dna sequence dataset is about some pathogen population
-  ?dnaSequenceData obo:IAO_0000136 ?pathogenPopulation .
+#dataset is about some host population
+  ?populationData obo:IAO_0000136 ?hostPopulation .
 
-  ?pathogenPopulation rdf:type/rdfs:subClassOf* <##PATHOGEN##> .
-  ?pathogenPopulation rdfs:label ?pathogenPopulationLabel .
-  ?pathogenPopulation a ?pathogenType .
-  ?pathogenType rdfs:label ?pathogenTypeLabel .
+  ?hostPopulation rdf:type/rdfs:subClassOf* <##HOST##> .
+  ?hostPopulation rdfs:label ?hostPopulationLabel .
+  ?hostPopulation a ?hostType .
+  ?hostType rdfs:label ?hostTypeLabel .
 
 
  #get the biotic ecosystem of the populations
  #BFO_0000137 proper part of continuant at all times
- ?pathogenPopulation obo:BFO_0000137 ?bioticEcosystem . 
+ ?hostPopulation obo:BFO_0000137 ?bioticEcosystem . 
  ?bioticEcosystem rdf:type obo:APOLLO_SV_00000104 .
  #get the ecosystm that contains the biotic ecosystem
   #obo:ecosystem APOLLO_SV_00000097
