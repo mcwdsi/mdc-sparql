@@ -3,9 +3,7 @@ prefix obo: <http://purl.obolibrary.org/obo/>
 PREFIX obc: <http://www.pitt.edu/obc/>
 prefix dc: <http://purl.org/dc/elements/1.1/>
 
-select distinct ?dtm ?prefTerm ?title ?searchMeasureLabel ?sourceCodeRelease ?version ?doi ?doiURL ?synopsis ?sourceCodeRepositoryUrl ?webAppUrl ?licenseName ?licenseUrl ?documentationDescription ?documentationUrl ?websiteUrl ?developerName ?pubAbout ?pubThatUsedRelease ?inputSpecLabel ?outputSpecLabel ?olympus ?uidsConc ?measureLabel ?hostPopulation ?hostPopulationLabel ?hostType ?hostTypeLabel ?pathogenPopulation ?pathogenPopulationLabel ?pathogenType ?pathogenTypeLabel ?geoLocation ?geoLocationLabel ?forecast ?nowcast ?forecastType ?forecastFrequency ?grantFunding
-
-#select distinct *  
+select distinct ?dtm ?softwareType ?prefTerm ?title ?sourceCodeRelease ?version ?doi ?doiURL ?synopsis ?sourceCodeRepositoryUrl ?webAppUrl ?licenseName ?licenseUrl ?documentationDescription ?documentationUrl ?websiteUrl ?developerName ?pubAbout ?pubThatUsedRelease ?inputSpecLabel ?outputSpecLabel ?olympus ?uidsConc ?measureLabel ?hostPopulation ?hostPopulationLabel ?hostType ?hostTypeLabel ?pathogenPopulation ?pathogenPopulationLabel ?pathogenType ?pathogenTypeLabel ?geoLocation ?geoLocationLabel ?forecast ?forecastType ?forecastFrequency ?grantFunding 
 
 from <http://www.pitt.edu/obc/ide/apollo-sv>
 from <http://www.pitt.edu/obc/ide/classes-and-indexing-instances>
@@ -15,38 +13,52 @@ from <http://ide.obc.io/auth>
 from <http://www.pitt.edu/obc/mdc/content>
 from <http://www.pitt.edu/obc/simulates-instances>
 
-
 where {
-    #the item (?dtm) is in the MIDAS Digital Commons
+  #the item (?dtm) is in the MIDAS Digital Commons
   <http://www.pitt.edu/obc/IDE_ARTICLES_12000070095> obo:BFO_0000174 ?dtm  .
-  
-?dtm rdf:type/rdfs:subClassOf* <http://purl.obolibrary.org/obo/APOLLO_SV_00000544>. #<http://purl.obolibrary.org/obo/APOLLO_SV_00000007> . #x is simulation software
+
+#the item is an instance of a class
+?dtm rdf:type/rdfs:subClassOf* <http://purl.obolibrary.org/obo/APOLLO_SV_00000555> .
+?dtm rdf:type ?softwareSubTypeClass .
+#the class has a label
+?softwareSubTypeClass rdfs:label ?softwareType .
+
+#the item has a label
 ?dtm rdfs:label ?prefTerm .
 
 #get compiledSoftware that corresponds to dtm via a compiling process
 ?compilingProcess obo:OBI_0000293 ?dtm .
 ?compilingProcess obo:OBI_0000299 ?executable .
+?executable rdf:type/rdfs:subClassOf*  obo:APOLLO_SV_00000525  .
 
 #get compiled software that achieves planned objective simulating of process type x
-  ?executionProcess obo:OBI_0000417 ?executable . #achieves planned objective obo:OBI_0000417
-  ?executable rdf:type/rdfs:subClassOf* obo:APOLLO_SV_00000525 . 
-  ?executionProcess rdf:type obo:OBIws_0000050 .
+  ?simulatingOfProcessTypeX obo:OBI_0000417 ?executable . #achieves planned objective obo:OBI_0000417
+  ?simulatingOfProcessTypeX rdf:type obo:APOLLO_SV_00000005 .
 
-#execution process has input dna sequence dataset
-  ?executionProcess obo:OBI_0000293 ?dnaSequenceData .   #has specified input - obo:OBI_0000293
-  ?dnaSequenceData rdf:type/rdfs:subClassOf* obo:OBI_0001573  .
+#get simulation of populations
+  ?simulatingOfProcessTypeX obo:OBI_0000299 ?simulationOfHostPopulation .   #has specified output - obo:OBI_0000299
+  ?simulationOfHostPopulation a/rdfs:subClassOf* obo:APOLLO_SV_00000031  .
+  #?simulationOfHostPopulationType 
+  ?simulationOfHostPopulation obo:APOLLO_SV_00000067 ?hostPopulation .
+ 
+  ?hostPopulation rdfs:label ?hostPopulationLabel .
+  ?hostPopulation a/rdfs:subClassOf* <http://purl.obolibrary.org/obo/APOLLO_SV_00000516> .  
+  ?hostPopulation a ?hostType . 
+  ?hostType rdfs:label ?hostTypeLabel .
+  
+  ?simulatingOfProcessTypeX obo:OBI_0000299 ?simulationOfPathogenPopulation .
+  ?simulationOfPathogenPopulation a/rdfs:subClassOf* obo:APOLLO_SV_00000031 .
+  #?simulationOfPathogenPopulationType   .
+  ?simulationOfPathogenPopulation obo:APOLLO_SV_00000067 ?pathogenPopulation .
 
-#dna sequence dataset is about some pathogen population
-  ?dnaSequenceData obo:IAO_0000136 ?pathogenPopulation .
-
-  ?pathogenPopulation rdf:type/rdfs:subClassOf* <##PATHOGEN##> .
   ?pathogenPopulation rdfs:label ?pathogenPopulationLabel .
-  ?pathogenPopulation a ?pathogenType .
+  ?pathogenPopulation a/rdfs:subClassOf* <http://www.pitt.edu/obc/IDE_0000000007> .
+  ?pathogenPopulation a ?pathogenType .   
   ?pathogenType rdfs:label ?pathogenTypeLabel .
-
 
  #get the biotic ecosystem of the populations
  #BFO_0000137 proper part of continuant at all times
+ ?hostPopulation obo:BFO_0000137 ?bioticEcosystem . 
  ?pathogenPopulation obo:BFO_0000137 ?bioticEcosystem . 
  ?bioticEcosystem rdf:type obo:APOLLO_SV_00000104 .
  #get the ecosystm that contains the biotic ecosystem
@@ -55,12 +67,10 @@ where {
  ?ecosystem rdf:type obo:APOLLO_SV_00000097 .
  #get the geographic region/location of the ecosystem.
  ?ecosystem <http://www.obofoundry.org/ro/ro.owl#located_in> ?geoLocation .
- ?geoLocation obo:BFO_0000137*  <##LOCATION##>  .
- ?geoLocation rdfs:label ?geoLocationLabel .
+ ?geoLocation obo:BFO_0000137*  <http://purl.obolibrary.org/obo/GEO_000000345>  .
+ ?geoLocation rdfs:label ?geoLocationLabel
 
-
-
-  #get the title if present
+  #if there is a title annotation, get the title
   OPTIONAL { ?dtm dc:title ?title } .
   #get URL to source code for this version if present
     OPTIONAL { ?dtm obo:ERO_0000480 ?sourceCodeRelease } .
@@ -133,14 +143,13 @@ where {
   #get publication(s) about if any
     OPTIONAL { ?n obo:IAO_0000136 ?dtm .
                ?n rdf:type obo:IAO_0000311 .
-               ?n dc:title ?pubAbout 
-             } .
+               ?n rdfs:label ?pubAbout } .
   #get publication(s) that used release if any
     OPTIONAL { ?m obo:IAO_0000136 ?k .               #m is about k
            ?k rdf:type obo:OBI_0000471 .     #k is instance of study
            ?m rdf:type obo:IAO_0000311 .     #m is instance of pub
            ?m dc:title ?pubThatUsedRelease .   #m has label pubThatUsedRelease
-           ?j obo:OBI_0000417 ?i .        #j achieves planned objective of i
+           ?i obo:BFO_0000054 ?j .        #i realized by j
            ?j rdf:type obo:OBIws_0000050 .    #j is instance of code execution
            ?j obo:BFO_0000050 ?k .        #j (execution) part of k (study)
            ?i rdf:type obo:APOLLO_SV_00000525 . #i instance of executable
@@ -192,28 +201,68 @@ where {
            ?execDisp obo:APOLLO_SV_00000543 ?execConc1 .  #the disposition to execute the software has its basis in the concretization
            ?invokeDisp obo:BFO_0000169  ?execDisp .  #the UIDS disp to invoke the software specifically depends on the execute disposition
            ?invokeDisp obo:APOLLO_SV_00000543 ?uidsConc .  #the concretization of UIDS software is the basis for the invoke disposition
+           ?uidsExec obo:RO_0000058 ?uidsConc .  #the UIDS executable is concretized by the concretizaiton of UIDS
+           ?uidsCompiling obo:OBI_0000299 ?uidsExec . #the UIDS executable is the output of compiling UIDS source code
+           ?uidsCompiling obo:OBI_0000293 ?uidsSource . #the IDS compiling has the UIDS source code as input
+           ?uidsSource rdfs:label ?uids .  #get the label for UIDS
            } .
   #get control measures if any
-##TOGGLE##    OPTIONAL { 
-           ?v3 rdf:type obo:APOLLO_SV_00000525 .  #v3 is executable
-           ?u3 rdf:type obo:APOLLO_SV_00000524 .  #u3 is compiling
-           ?u3 obo:OBI_0000293 ?dtm .               #compiling has source code as input
-           ?u3 obo:OBI_0000299 ?v3 .               #compiling has executable as output
+    OPTIONAL {
+       ?u3 obo:OBI_0000293 ?dtm .               #compiling has source code as input
+       ?u3 rdf:type obo:APOLLO_SV_00000524 .  #u3 is compiling
+      ?u3 obo:OBI_0000299 ?v3 .               #compiling has executable as output
+      ?v3 rdf:type obo:APOLLO_SV_00000525 .  #v3 is executable
+           
            ?simulatingx obo:OBI_0000417 ?v3 . #simulatingx achieves objective of executable
            ?simulatingx rdf:type obo:APOLLO_SV_00000005  .  #simulatingx is instance of process of simulating process of type X
            ?simulatingx obo:OBI_0000299 ?measure .  #simulatingx has output an infectious disease control measure
            ?measure rdf:type ?measureType . #control measure is an instance of a particular type
-           ?measureType rdfs:label ?measureLabel . #get the label on the measure type
-           ?measureType rdfs:subClassOf* <##CONTROL_MEASURE_IRI##> #control measure type must be a type of control measure (otherwise we get other ICE/PIE output by simulation)
-##TOGGLE  } 
-    .
+           ?measureType rdfs:subClassOf* obo:APOLLO_SV_00000086 . #control measure type must be a type of control measure (otherwise we get other ICE/PIE output by simulation)
+           ?measure rdfs:label ?measureLabel  #get the label on the measure type
+          
+        } .
   #get forecasts if any
-  OPTIONAL {
-    # the item (?dtm) is an instance of disease forecaster
-    ?dtm rdf:type obo:APOLLO_SV_00000557 .
+  #OPTIONAL {
     # there is a forecasting objective that is part of the forecaster
-    ?forecastingObjective obo:BFO_0000050 ?dtm .
-    ?forecastingObjective rdf:type obo:APOLLO_SV_00000581 .
+  #  ?forecastingObjective obo:BFO_0000050 ?dtm .
+  #  ?forecastingObjective rdf:type obo:APOLLO_SV_00000581 .
+    # there is a compiling of the forecaster
+  #  ?u4 obo:OBI_0000293 ?dtm . 
+    # compiling outputs executable
+  #  ?u4 obo:OBI_0000299 ?v4 .
+  #  ?v4 rdf:type obo:APOLLO_SV_00000525 .
+    # the executable was run 
+  #  ?forecasting obo:OBI_0000417 ?v4 .
+    # the run of the executable has specified output - that's the forecast
+  #  ?forecasting obo:OBI_0000299 ?forecastInd .
+  #  ?forecastInd rdfs:label ?forecast
+  #} .
+  #get nowcasts if any 
+  #OPTIONAL {
+    # there is a nowcasting objective that is part of the forecaster
+  #  ?nowcastingObjective obo:BFO_0000050 ?dtm .
+  #  ?nowcastingObjective rdf:type obo:APOLLO_SV_00000582 .
+    # there is a compiling of the forecaster
+  #  ?u4 obo:OBI_0000293 ?dtm . 
+    # compiling outputs executable
+  #  ?u4 obo:OBI_0000299 ?v4 .
+  #  ?v4 rdf:type obo:APOLLO_SV_00000525 .
+    # the executable was run 
+  #  ?nowcasting obo:OBI_0000417 ?v4 .
+    # the run of the executable has specified output - that's the nowcast
+  #  ?nowcasting obo:OBI_0000299 ?nowcastInd .
+  #  ?nowcastInd rdfs:label ?nowcast
+  #} .
+  # get forecaster type, forecast frequency, and forecast if any
+  OPTIONAL {
+    # there is an objective that is part of the forecaster
+    ?forecastObjectiveInd obo:BFO_0000050 ?dtm .
+    # the objective is an instance of some class
+    ?forecastObjectiveInd rdf:type ?forecastObjectiveType .
+    # the objective class has a label
+    ?forecastObjectiveType rdfs:label ?forecastType .
+    # the objective class is either a subclass of, or is, forecast objective
+    ?forecastObjectiveType rdfs:subClassOf* obo:APOLLO_SV_00000581 .
     # there is a compiling of the forecaster
     ?u4 obo:OBI_0000293 ?dtm . 
     # compiling outputs executable
@@ -225,36 +274,8 @@ where {
     ?forecasting obo:OBI_0000299 ?forecastInd .
     ?forecastInd rdfs:label ?forecast
   } .
-  #get nowcasts if any 
-  OPTIONAL {
-  # the item (?dtm) is an instance of disease forecaster
-    ?dtm rdf:type obo:APOLLO_SV_00000557 .
-    # there is a nowcasting objective that is part of the forecaster
-    ?nowcastingObjective obo:BFO_0000050 ?dtm .
-    ?nowcastingObjective rdf:type obo:APOLLO_SV_00000582 .
-    # there is a compiling of the forecaster
-    ?u4 obo:OBI_0000293 ?dtm . 
-    # compiling outputs executable
-    ?u4 obo:OBI_0000299 ?v4 .
-    ?v4 rdf:type obo:APOLLO_SV_00000525 .
-    # the executable was run 
-    ?forecasting obo:OBI_0000417 ?v4 .
-    # the run of the executable has specified output - that's the nowcast
-    ?forecasting obo:OBI_0000299 ?nowcastInd .
-    ?nowcastInd rdfs:label ?nowcast
-  } .
-  # get forecaster type if any
-  OPTIONAL {
-    # there is an objective that is part of the forecaster
-    ?forecastObjectiveInd obo:BFO_0000050 ?dtm .
-    ?forecastObjectiveInd rdf:type ?forecastObjectiveType .
-    ?forecastObjectiveType rdfs:label ?forecastType .
-    ?forecastObjectiveType rdfs:subClassOf* obo:IAO_0000005
-  } .
   #get forecastFrequency if any
   OPTIONAL {
-    # the item (?dtm) is an instance of disease forecaster
-    ?dtm rdf:type obo:APOLLO_SV_00000557 .
     # there is a simulator time step specification that is part of the forecaster
     ?simulatorTimeStepSpec obo:BFO_0000050 ?dtm .
     ?simulatorTimeStepSpec rdf:type obo:APOLLO_SV_00000068 .
@@ -264,7 +285,7 @@ where {
     ?valueSpec obo:IAO_0000039 ?forecastFrequencyInd .
     ?forecastFrequencyInd rdfs:label ?forecastFrequency
   } .
-    #get grantFunding if any
+  #get grantFunding if any
   OPTIONAL {
     #the item is the output of a code writing (aka software developing) process
     ?codeWriting obo:OBI_0000299 ?dtm .
@@ -282,7 +303,7 @@ where {
   } .
   #this block is made not optional if there is a specific control measure specified by the user. If this block is optional, then no harm done, because
   #  it will not affect output.
-  ##TOGGLE## OPTIONAL { 
+  ##TOGGLE OPTIONAL { 
                ?u7 obo:OBI_0000293 ?dtm .               #compiling has source code as input
                ?u7 rdf:type obo:APOLLO_SV_00000524 .  #u7 is compiling
                 ?u7 obo:OBI_0000299 ?v7 .               #compiling has executable as output
@@ -292,9 +313,10 @@ where {
            ?simulatingx2 obo:OBI_0000299 ?measure2 .  #simulatingx has output an infectious disease control measure
            ?measure2 rdf:type ?measureType2 . #control measure is an instance of a particular type
            ?measureType2 rdfs:subClassOf* <##CONTROL_MEASURE_IRI##>  #control measure type must be a type of control measure (otherwise we get other ICE/PIE output by simulation)
-  ##TOGGLE## } 
+#TOGGLE } 
         .
+ 
   #filter out punned individuals
-     FILTER ( ?dtm != obo:APOLLO_SV_00000557 )
-     }  
-  ORDER BY ?dtm
+  #   FILTER ( ?dtm != obo:APOLLO_SV_00000561 )
+   }
+ORDER BY ?dtm
