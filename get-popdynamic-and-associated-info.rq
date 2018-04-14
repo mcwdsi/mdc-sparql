@@ -39,12 +39,30 @@ where {
 #dataset is about some host population
   ?populationData obo:IAO_0000136 ?hostPopulation .
 
-  ?hostPopulation rdf:type/rdfs:subClassOf* <##HOST##> .
+  ?hostPopulation rdf:type/rdfs:subClassOf* <##HOST##> .   #default http://purl.obolibrary.org/obo/APOLLO_SV_00000516
   ?hostPopulation rdfs:label ?hostPopulationLabel .
   ?hostPopulation a ?hostType .
   ?hostType rdfs:label ?hostTypeLabel .
 
+# So if the user specifies a particular pathogen to search software by, then 
+#  we shouldn't return any population dynamics models, since they are all
+#  about hosts.  But if the user doesn't specify a pathogen, then we remove 
+#  the ##TOGGLE##s and pathogen is optional, so we get population dynamics models.
+##TOGGLE## OPTIONAL {
+  #population dataset is about some pathogen population
+  ?populationData obo:IAO_0000136 ?pathogenPopulation .
+  
+  ?pathogenPopulation rdf:type/rdfs:subClassOf* <##PATHOGEN##> .  #default http://www.pitt.edu/obc/IDE_0000000007
+  ?pathogenPopulation rdfs:label ?pathogenPopulationLabel .
+  ?pathogenPopulation a ?pathogenType .
+  ?pathogenType rdfs:label ?pathogenTypeLabel .
 
+
+ #get the biotic ecosystem of the populations
+ #BFO_0000137 proper part of continuant at all times
+ ?pathogenPopulation obo:BFO_0000137 ?bioticEcosystem
+##TOGGLE }
+.
  #get the biotic ecosystem of the populations
  #BFO_0000137 proper part of continuant at all times
  ?hostPopulation obo:BFO_0000137 ?bioticEcosystem . 
@@ -55,7 +73,7 @@ where {
  ?ecosystem rdf:type obo:APOLLO_SV_00000097 .
  #get the geographic region/location of the ecosystem.
  ?ecosystem <http://www.obofoundry.org/ro/ro.owl#located_in> ?geoLocation .
- ?geoLocation obo:BFO_0000137*  <##LOCATION##>  .
+ ?geoLocation obo:BFO_0000137*  <##LOCATION##>  .    #default http://purl.obolibrary.org/obo/GEO_000000345
  ?geoLocation rdfs:label ?geoLocationLabel .
 
 
@@ -279,7 +297,7 @@ where {
     ?grantId rdf:type obo:OBI_0001629 . 
     #get the label of the grant identifier individual
     ?grantId rdfs:label ?grantFunding
-  } .
+  } . 
   #filter out punned individuals
      FILTER ( ?dtm != obo:APOLLO_SV_00000557 )
      }  

@@ -39,11 +39,24 @@ where {
 #dna sequence dataset is about some pathogen population
   ?dnaSequenceData obo:IAO_0000136 ?pathogenPopulation .
 
-  ?pathogenPopulation rdf:type/rdfs:subClassOf* <##PATHOGEN##> .
+  ?pathogenPopulation rdf:type/rdfs:subClassOf* <##PATHOGEN##> .   #default http://www.pitt.edu/obc/IDE_0000000007
   ?pathogenPopulation rdfs:label ?pathogenPopulationLabel .
   ?pathogenPopulation a ?pathogenType .
   ?pathogenType rdfs:label ?pathogenTypeLabel .
 
+#if the user specifies a particular host to search by, then we don't want to return
+# pathogen evolution models (unless they mention a specific host). So this block will
+# be switched to optional when query not restricted by host.
+##TOGGLE## OPTIONAL {
+  ?dnaSequenceData obo:IAO_0000136 ?hostPopulation .
+
+  ?hostPopulation rdf:type/rdfs:subClassOf* <##HOST##> .   #default http://purl.obolibrary.org/obo/APOLLO_SV_00000516
+  ?hostPopulation rdfs:label ?hostPopulationLabel .
+  ?hostPopulation a ?hostType .
+  ?hostType rdfs:label ?hostTypeLabel .
+  ?hostPopulation obo:BFO_0000137 ?bioticEcosystem
+##TOGGLE## }
+.
 
  #get the biotic ecosystem of the populations
  #BFO_0000137 proper part of continuant at all times
@@ -55,7 +68,7 @@ where {
  ?ecosystem rdf:type obo:APOLLO_SV_00000097 .
  #get the geographic region/location of the ecosystem.
  ?ecosystem <http://www.obofoundry.org/ro/ro.owl#located_in> ?geoLocation .
- ?geoLocation obo:BFO_0000137*  <##LOCATION##>  .
+ ?geoLocation obo:BFO_0000137*  <##LOCATION##>  .      #default http://purl.obolibrary.org/obo/GEO_000000345
  ?geoLocation rdfs:label ?geoLocationLabel .
 
 
@@ -194,7 +207,7 @@ where {
            ?invokeDisp obo:APOLLO_SV_00000543 ?uidsConc .  #the concretization of UIDS software is the basis for the invoke disposition
            } .
   #get control measures if any
-##TOGGLE##    OPTIONAL { 
+##TOGGLE## OPTIONAL { 
            ?v3 rdf:type obo:APOLLO_SV_00000525 .  #v3 is executable
            ?u3 rdf:type obo:APOLLO_SV_00000524 .  #u3 is compiling
            ?u3 obo:OBI_0000293 ?dtm .               #compiling has source code as input
@@ -205,7 +218,7 @@ where {
            ?measure rdf:type ?measureType . #control measure is an instance of a particular type
            ?measureType rdfs:label ?measureLabel . #get the label on the measure type
            ?measureType rdfs:subClassOf* <##CONTROL_MEASURE_IRI##> #control measure type must be a type of control measure (otherwise we get other ICE/PIE output by simulation)
-##TOGGLE  } 
+##TOGGLE## } 
     .
   #get forecasts if any
   OPTIONAL {
@@ -280,20 +293,6 @@ where {
     #get the label of the grant identifier individual
     ?grantId rdfs:label ?grantFunding
   } .
-  #this block is made not optional if there is a specific control measure specified by the user. If this block is optional, then no harm done, because
-  #  it will not affect output.
-  ##TOGGLE## OPTIONAL { 
-               ?u7 obo:OBI_0000293 ?dtm .               #compiling has source code as input
-               ?u7 rdf:type obo:APOLLO_SV_00000524 .  #u7 is compiling
-                ?u7 obo:OBI_0000299 ?v7 .               #compiling has executable as output
-          ?v7 rdf:type obo:APOLLO_SV_00000525 .  #v7 is executable
-           ?simulatingx2 obo:OBI_0000417 ?v7 . #simulatingx achieves objective of executable
-           ?simulatingx2 rdf:type obo:APOLLO_SV_00000005  .  #simulatingx is instance of process of simulating process of type X
-           ?simulatingx2 obo:OBI_0000299 ?measure2 .  #simulatingx has output an infectious disease control measure
-           ?measure2 rdf:type ?measureType2 . #control measure is an instance of a particular type
-           ?measureType2 rdfs:subClassOf* <##CONTROL_MEASURE_IRI##>  #control measure type must be a type of control measure (otherwise we get other ICE/PIE output by simulation)
-  ##TOGGLE## } 
-        .
   #filter out punned individuals
      FILTER ( ?dtm != obo:APOLLO_SV_00000557 )
      }  
