@@ -47,8 +47,8 @@ where {
 # So if the user specifies a particular pathogen to search software by, then 
 #  we shouldn't return any population dynamics models, since they are all
 #  about hosts.  But if the user doesn't specify a pathogen, then we remove 
-#  the ##TOGGLE##s and pathogen is optional, so we get population dynamics models.
-##TOGGLE## OPTIONAL {
+#  the ##P_TOGGLE##s and pathogen is optional, so we get population dynamics models.
+##P_TOGGLE## OPTIONAL {
   #population dataset is about some pathogen population
   ?populationData obo:IAO_0000136 ?pathogenPopulation .
   
@@ -61,7 +61,7 @@ where {
  #get the biotic ecosystem of the populations
  #BFO_0000137 proper part of continuant at all times
  ?pathogenPopulation obo:BFO_0000137 ?bioticEcosystem
-##TOGGLE }
+##P_TOGGLE }
 .
  #get the biotic ecosystem of the populations
  #BFO_0000137 proper part of continuant at all times
@@ -212,7 +212,7 @@ where {
            ?invokeDisp obo:APOLLO_SV_00000543 ?uidsConc .  #the concretization of UIDS software is the basis for the invoke disposition
            } .
   #get control measures if any
-##TOGGLE##    OPTIONAL { 
+##CM_TOGGLE##    OPTIONAL { 
            ?v3 rdf:type obo:APOLLO_SV_00000525 .  #v3 is executable
            ?u3 rdf:type obo:APOLLO_SV_00000524 .  #u3 is compiling
            ?u3 obo:OBI_0000293 ?dtm .               #compiling has source code as input
@@ -223,7 +223,7 @@ where {
            ?measure rdf:type ?measureType . #control measure is an instance of a particular type
            ?measureType rdfs:label ?measureLabel . #get the label on the measure type
            ?measureType rdfs:subClassOf* <##CONTROL_MEASURE_IRI##> #control measure type must be a type of control measure (otherwise we get other ICE/PIE output by simulation)
-##TOGGLE  } 
+##CM_TOGGLE##  } 
     .
   #get forecasts if any
   OPTIONAL {

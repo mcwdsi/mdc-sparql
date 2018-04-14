@@ -42,7 +42,7 @@ where {
   ?hostPopulation a ?hostType .
   ?hostType rdfs:label ?hostTypeLabel .
   
-##TOGGLE## OPTIONAL {
+##P_TOGGLE## OPTIONAL {
   ?simulatingOfProcessTypeX obo:OBI_0000299 ?simulationOfPathogenPopulation .
   ?simulationOfPathogenPopulation a/rdfs:subClassOf* obo:APOLLO_SV_00000031 .
   #?simulationOfPathogenPopulationType   .
@@ -53,7 +53,7 @@ where {
   ?pathogenPopulation a ?pathogenType .   
   ?pathogenType rdfs:label ?pathogenTypeLabel .
   ?pathogenPopulatoin obo:BFO_0000137 ?bioticEcosystem 
-##TOGGLE## }
+##P_TOGGLE## }
  .
  #get the biotic ecosystem of the populations
  #BFO_0000137 proper part of continuant at all times
@@ -204,7 +204,7 @@ where {
            ?invokeDisp obo:APOLLO_SV_00000543 ?uidsConc .  #the concretization of UIDS software is the basis for the invoke disposition
            } .
   #get control measures if any
-##TOGGLE##    OPTIONAL { 
+##CM_TOGGLE##    OPTIONAL { 
            ?v3 rdf:type obo:APOLLO_SV_00000525 .  #v3 is executable
            ?u3 rdf:type obo:APOLLO_SV_00000524 .  #u3 is compiling
            ?u3 obo:OBI_0000293 ?dtm .               #compiling has source code as input
@@ -215,7 +215,7 @@ where {
            ?measure rdf:type ?measureType . #control measure is an instance of a particular type
            ?measureType rdfs:label ?measureLabel . #get the label on the measure type
            ?measureType rdfs:subClassOf* <##CONTROL_MEASURE_IRI##> #control measure type must be a type of control measure (otherwise we get other ICE/PIE output by simulation)
-##TOGGLE  } 
+##CM_TOGGLE##  } 
     .
   #get forecasts if any
   OPTIONAL {

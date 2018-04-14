@@ -304,7 +304,7 @@ where {
   } .
   #this block is made not optional if there is a specific control measure specified by the user. If this block is optional, then no harm done, because
   #  it will not affect output.
-  ##TOGGLE## OPTIONAL { 
+  ##CM_TOGGLE## OPTIONAL { 
                ?u7 obo:OBI_0000293 ?dtm .               #compiling has source code as input
                ?u7 rdf:type obo:APOLLO_SV_00000524 .  #u7 is compiling
                 ?u7 obo:OBI_0000299 ?v7 .               #compiling has executable as output
@@ -314,7 +314,7 @@ where {
            ?simulatingx2 obo:OBI_0000299 ?measure2 .  #simulatingx has output an infectious disease control measure
            ?measure2 rdf:type ?measureType2 . #control measure is an instance of a particular type
            ?measureType2 rdfs:subClassOf* <##CONTROL_MEASURE_IRI##>  #control measure type must be a type of control measure (otherwise we get other ICE/PIE output by simulation)
-  ##TOGGLE## } 
+  ##CM_TOGGLE## } 
         .
  
   #filter out punned individuals
