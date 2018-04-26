@@ -26,16 +26,16 @@ where {
 
   #block of clauses that restrict by host and pathogen populations and location
   ?x obo:IAO_0000136/obo:RO_0000057* ?population .
-  ?population rdf:type/rdfs:subClassOf* <##HOST##> .
+  ?population rdf:type/rdfs:subClassOf* <##HOST##> .     #default http://purl.obolibrary.org/obo/APOLLO_SV_00000516
   ?population rdf:type ?populationType .
   ?populationType rdfs:label ?populationTypeLabel .
   ?population obo:BFO_0000137* ?ecosystem .
   ?ecosystem rdf:type obo:APOLLO_SV_00000097 .
   ?ecosystem <http://www.obofoundry.org/ro/ro.owl#located_in> ?geoLocation .
-  ?geoLocation obo:BFO_0000137*  <##LOCATION##> . #default  
+  ?geoLocation obo:BFO_0000137*  <##LOCATION##> .       #default http://purl.obolibrary.org/obo/GEO_000000345
   ?geoLocation rdfs:label ?geoLocationLabel .
    ?x obo:IAO_0000136/obo:RO_0000057* ?population2 .
-  ?population2 rdf:type/rdfs:subClassOf* <##PATHOGEN##> .
+  ?population2 rdf:type/rdfs:subClassOf* <##PATHOGEN##> .    #default http://www.pitt.edu/obc/IDE_0000000007
   ?population2 obo:BFO_0000137* ?ecosystem .
 
   ##CONTROL_MEASURE_CLAUSE##   #if user picks a control measure, replace with:
