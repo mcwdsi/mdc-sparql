@@ -1,0 +1,25 @@
+prefix obo: <http://purl.obolibrary.org/obo/>
+
+select distinct ?z ?w ?identifierType ?softwareName
+from <http://www.pitt.edu/obc/ide/apollo-sv>
+from <http://www.pitt.edu/obc/ide/classes-and-indexing-instances>
+from <http://www.pitt.edu/obc/ide/article-instances>
+from <http://www.pitt.edu/obc/ide/article-deleted-instances>
+from <http://ide.obc.io/auth>
+from <http://www.pitt.edu/obc/mdc/content>
+where {
+  ?x rdf:type/rdfs:subClassOf* obo:IAO_0000010 .
+  ?x rdfs:label ?softwareName .
+
+  ?z rdf:type/rdfs:subClassOf* obo:IAO_0020000 .
+  ?z rdf:type ?identifierType . 
+  ?z obo:IAO_0000219 ?x .
+  ?z rdfs:label ?w
+  #filter out punned individuals
+    # FILTER ( ?x != obo:IAO_0000010 )
+    # FILTER ( ?x != ?softwareOrSubclass )
+    # FILTER ( ?softwareOrSubclass != obo:APOLLO_SV_00000525 )
+     FILTER ( ?identifierType != obo:APOLLO_SV_00000108)
+     FILTER ( ?identifierType != owl:NamedIndividual)
+     }
+order by ?z
