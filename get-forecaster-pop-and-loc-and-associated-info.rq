@@ -52,7 +52,7 @@ where {
   ?pathogenPopulation a/rdfs:subClassOf* <##PATHOGEN##> .    #default http://www.pitt.edu/obc/IDE_0000000007
   ?pathogenPopulation a ?pathogenType .   
   ?pathogenType rdfs:label ?pathogenTypeLabel .
-  ?pathogenPopulatoin obo:BFO_0000137 ?bioticEcosystem 
+  ?pathogenPopulation obo:BFO_0000137 ?bioticEcosystem 
 ##P_TOGGLE## }
  .
  #get the biotic ecosystem of the populations
@@ -214,7 +214,8 @@ where {
            ?simulatingx obo:OBI_0000299 ?measure .  #simulatingx has output an infectious disease control measure
            ?measure rdf:type ?measureType . #control measure is an instance of a particular type
            ?measureType rdfs:label ?measureLabel . #get the label on the measure type
-           ?measureType rdfs:subClassOf* <##CONTROL_MEASURE_IRI##> #control measure type must be a type of control measure (otherwise we get other ICE/PIE output by simulation)
+           #control measure type must be a type of control measure (otherwise we get other ICE/PIE output by simulation)
+           ?measureType rdfs:subClassOf* <##CONTROL_MEASURE_IRI##>  #default   http://purl.obolibrary.org/obo/APOLLO_SV_00000086 
 ##CM_TOGGLE##  } 
     .
   #get forecasts if any
@@ -289,6 +290,7 @@ where {
     ?grantId rdf:type obo:OBI_0001629 . 
     #get the label of the grant identifier individual
     ?grantId rdfs:label ?grantFunding
+} .
   #filter out punned individuals
      FILTER ( ?dtm != obo:APOLLO_SV_00000557 )
      }  
