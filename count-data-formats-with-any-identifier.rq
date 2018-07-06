@@ -9,15 +9,23 @@ from <http://www.pitt.edu/obc/ide/article-deleted-instances>
 from <http://ide.obc.io/auth>
 from <http://www.pitt.edu/obc/mdc/content>
 where {
+  #the item (?x) is in the MIDAS Digital Commons
+  <http://www.pitt.edu/obc/IDE_ARTICLES_12000070095> obo:BFO_0000174 ?x  .
+
   ?x rdf:type ?dataFormatOrSubclass .
+  
+  #the item is a data format specification
   ?dataFormatOrSubclass rdfs:subClassOf* obo:IAO_0000098 .
 
+  #there is a ?z that is an instance of some subclass of identifier and denotes ?x
   ?z rdf:type ?identifierType .
   ?identifierType rdfs:subClassOf* obo:IAO_0020000 .
   ?z obo:IAO_0000219 ?x .
 
-
+  #filter out punned individuals
   FILTER ( ?x != obo:IAO_0000098 )
   FILTER ( ?x != ?dataFormatOrSubclass )
+
+  #filter out software version identifiers
   FILTER ( ?identifierType != obo:APOLLO_SV_00000108)
 }

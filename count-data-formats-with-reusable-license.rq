@@ -9,11 +9,19 @@ from <http://www.pitt.edu/obc/ide/article-deleted-instances>
 from <http://ide.obc.io/auth>
 from <http://www.pitt.edu/obc/mdc/content>
 where {
+ #the item (?x) is in the MIDAS Digital Commons
+  <http://www.pitt.edu/obc/IDE_ARTICLES_12000070095> obo:BFO_0000174 ?x  .
+
   ?x rdf:type ?dataFormatOrSubclass .
+  
+  #the item is a data format specification
   ?dataFormatOrSubclass rdfs:subClassOf* obo:IAO_0000098 .
 
+  #there is a ?t that is an instance of copyright license for a creative work, and ?t part of ?x
    ?t rdf:type/rdfs:subClassOf* obo:APOLLO_SV_00000798 . 
    ?t obo:BFO_0000050 ?x . 
+
+  #filter punned individuals
    FILTER ( ?x != obo:IAO_0000098 )
    FILTER ( ?x != ?dataFormatOrSubclass )
   }
