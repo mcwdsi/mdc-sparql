@@ -9,6 +9,9 @@ from <http://www.pitt.edu/obc/ide/article-deleted-instances>
 from <http://ide.obc.io/auth>
 from <http://www.pitt.edu/obc/mdc/content>
 where {
+  #dataset must be in MDC
+  <http://www.pitt.edu/obc/IDE_ARTICLES_12000070095> obo:BFO_0000174 ?x  .
+
   ?x rdf:type ?datasetOrSubclass .
   ?datasetOrSubclass rdfs:subClassOf+ obo:IAO_0000100 .
   

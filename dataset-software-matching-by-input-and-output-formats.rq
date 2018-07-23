@@ -59,6 +59,11 @@ where {
   ?dataParsing1 rdf:type obo:APOLLO_SV_00000566 . #and it's an instance of parsing
   ?inputSpec rdfs:label ?inputDataFormat . #and the input spec has a label hopefully
 
+#and the dataset and both software must be in the MDC (for now)
+  <http://www.pitt.edu/obc/IDE_ARTICLES_12000070095> obo:BFO_0000174 ?dataset  .
+  <http://www.pitt.edu/obc/IDE_ARTICLES_12000070095> obo:BFO_0000174 ?x  .
+  <http://www.pitt.edu/obc/IDE_ARTICLES_12000070095> obo:BFO_0000174 ?x1  .
+
   #filter cases where one software has the same input / output
   FILTER ( ?x1 != ?x ) 
 }
