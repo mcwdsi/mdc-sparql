@@ -1,7 +1,7 @@
  prefix obo: <http://purl.obolibrary.org/obo/>
 prefix dc: <http://purl.org/dc/elements/1.1/>
 
-select ?dataset ?datasetName ?datasetTitle ?datasetLabel ?inputDataFormat ?x1 ?softwareOne (?specLabel as ?intermediateFormat) ?x ?softwareTwo  
+select distinct ?dataset ?datasetName ?datasetTitle ?datasetLabel ?inputDataFormat ?x1 ?softwareOne (?specLabel as ?intermediateFormat) ?x ?softwareTwo  
 #select distinct ?dataset
 
 from <http://www.pitt.edu/obc/ide/apollo-sv>
@@ -67,3 +67,4 @@ where {
   #filter cases where one software has the same input / output
   FILTER ( ?x1 != ?x ) 
 }
+order by ?dataset ?x1 ?x
