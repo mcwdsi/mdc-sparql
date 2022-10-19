@@ -31,5 +31,5 @@ where {
      FILTER ( ?softwareOrSubclass != obo:APOLLO_SV_00000525 )
   
   	 #and here is the magic.  We filter out any result where the format spec is not part of the MDC
-     FILTER NOT EXISTS {  FILTER NOT EXISTS { <http://www.pitt.edu/obc/IDE_ARTICLES_12000070095> obo:BFO_0000174 ?formatSpec } }
+     FILTER NOT EXISTS { <http://www.pitt.edu/obc/IDE_ARTICLES_12000070095> obo:BFO_0000174 ?formatSpec } 
 }
